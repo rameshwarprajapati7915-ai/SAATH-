@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "name": "SAATH",
+    "slug": "saath-v1",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#080B14"
+    },
+    "android": {
+      "package": "com.saath.learnbuildgrow",
+      "versionCode": 1
+    }
+  }
+}
