@@ -12,6 +12,14 @@
     "android": {
       "package": "com.saath.learnbuildgrow",
       "versionCode": 1
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7f793797-56df-4f2f-8ce1-cdb6d26e660b"
+      }
+    },
+    "cli": {
+      "appVersionSource": "remote"
     }
   }
 }
