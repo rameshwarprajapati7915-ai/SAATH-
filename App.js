@@ -928,7 +928,7 @@ function LearnScreen({ colors }) {
 
 /* =========================================================
    END OF PART 1
-   =========================================================/* =========================================================
+   ========================================================= /* =========================================================
    SKILLS SCREEN
    ========================================================= */
 
@@ -2574,23 +2574,21 @@ function ProfileOption({
 
 /* =========================================================
    END OF PART 2
-   ========================================================= *//* =========================================================
+   ========================================================= /* =========================================================
    SAATH AI SCREEN
    ========================================================= */
 
 function AIScreen({ colors }) {
-  const [message, setMessage] =
-    useState("");
+  const [message, setMessage] = useState("");
 
-  const [messages, setMessages] =
-    useState([
-      {
-        id: 1,
-        role: "ai",
-        text:
-          "Hi! I'm SAATH AI 👋\n\nAsk me about your studies, concepts, projects, coding or any skill you're learning.",
-      },
-    ]);
+  const [messages, setMessages] = useState([
+    {
+      id: 1,
+      role: "ai",
+      text:
+        "Hi! I'm SAATH AI 👋\n\nAsk me about your studies, concepts, projects, coding or any skill you're learning.",
+    },
+  ]);
 
   function sendMessage() {
     const cleaned = message.trim();
@@ -2612,11 +2610,14 @@ function AIScreen({ colors }) {
 
     /*
       IMPORTANT:
+
       This is only the UI layer.
 
-      Production SAATH AI should call a secure
-      backend API. Never put a private AI API key
-      directly inside the Android app.
+      Production SAATH AI must call a secure
+      backend API.
+
+      NEVER put a private AI API key directly
+      inside the Android app.
     */
 
     setTimeout(() => {
@@ -2639,25 +2640,24 @@ function AIScreen({ colors }) {
         { backgroundColor: colors.bg },
       ]}
     >
+
       {/* HEADER */}
 
       <View
         style={[
           styles.aiHeader,
           {
-            backgroundColor:
-              colors.surface,
-            borderBottomColor:
-              colors.border,
+            backgroundColor: colors.surface,
+            borderBottomColor: colors.border,
           },
         ]}
       >
+
         <View
           style={[
             styles.aiLogo,
             {
-              backgroundColor:
-                colors.primarySoft,
+              backgroundColor: colors.primarySoft,
             },
           ]}
         >
@@ -2667,6 +2667,7 @@ function AIScreen({ colors }) {
         </View>
 
         <View style={{ flex: 1 }}>
+
           <Text
             style={[
               styles.aiTitle,
@@ -2684,6 +2685,7 @@ function AIScreen({ colors }) {
           >
             ● Learning assistant
           </Text>
+
         </View>
 
         <Ionicons
@@ -2691,30 +2693,31 @@ function AIScreen({ colors }) {
           size={21}
           color={colors.green}
         />
+
       </View>
 
       {/* CHAT */}
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={
-          styles.chatContent
-        }
+        contentContainerStyle={styles.chatContent}
       >
+
         <View
           style={[
             styles.aiWelcome,
             {
-              backgroundColor:
-                colors.primarySoft,
+              backgroundColor: colors.primarySoft,
             },
           ]}
         >
+
           <Text style={{ fontSize: 25 }}>
             🧠
           </Text>
 
           <View style={{ flex: 1 }}>
+
             <Text
               style={[
                 styles.cardTitle,
@@ -2734,22 +2737,23 @@ function AIScreen({ colors }) {
               give examples or create practice
               questions.
             </Text>
+
           </View>
+
         </View>
 
         {messages.map((item) => {
-          const isUser =
-            item.role === "user";
+          const isUser = item.role === "user";
 
           return (
             <View
               key={item.id}
               style={[
                 styles.messageRow,
-                isUser &&
-                  styles.messageRowUser,
+                isUser && styles.messageRowUser,
               ]}
             >
+
               {!isUser && (
                 <View
                   style={[
@@ -2771,11 +2775,11 @@ function AIScreen({ colors }) {
                     backgroundColor: isUser
                       ? colors.primary
                       : colors.surface,
-                    borderColor:
-                      colors.border,
+                    borderColor: colors.border,
                   },
                 ]}
               >
+
                 <Text
                   style={[
                     styles.messageText,
@@ -2788,10 +2792,13 @@ function AIScreen({ colors }) {
                 >
                   {item.text}
                 </Text>
+
               </View>
+
             </View>
           );
         })}
+
       </ScrollView>
 
       {/* SUGGESTIONS */}
@@ -2799,31 +2806,28 @@ function AIScreen({ colors }) {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={
-          styles.suggestionRow
-        }
+        contentContainerStyle={styles.suggestionRow}
       >
+
         {[
           "Explain a concept",
           "Give me a quiz",
           "Help with coding",
           "Make a study plan",
         ].map((suggestion) => (
+
           <Pressable
             key={suggestion}
-            onPress={() =>
-              setMessage(suggestion)
-            }
+            onPress={() => setMessage(suggestion)}
             style={[
               styles.suggestionChip,
               {
-                backgroundColor:
-                  colors.surface,
-                borderColor:
-                  colors.border,
+                backgroundColor: colors.surface,
+                borderColor: colors.border,
               },
             ]}
           >
+
             <Text
               style={[
                 styles.suggestionText,
@@ -2832,8 +2836,11 @@ function AIScreen({ colors }) {
             >
               {suggestion}
             </Text>
+
           </Pressable>
+
         ))}
+
       </ScrollView>
 
       {/* INPUT */}
@@ -2842,27 +2849,23 @@ function AIScreen({ colors }) {
         style={[
           styles.chatInputRow,
           {
-            backgroundColor:
-              colors.surface,
-            borderTopColor:
-              colors.border,
+            backgroundColor: colors.surface,
+            borderTopColor: colors.border,
           },
         ]}
       >
+
         <TextInput
           value={message}
           onChangeText={setMessage}
           placeholder="Ask SAATH anything..."
-          placeholderTextColor={
-            colors.muted
-          }
+          placeholderTextColor={colors.muted}
           multiline
           style={[
             styles.chatInput,
             {
               color: colors.text,
-              backgroundColor:
-                colors.surface2,
+              backgroundColor: colors.surface2,
             },
           ]}
         />
@@ -2872,29 +2875,33 @@ function AIScreen({ colors }) {
           style={[
             styles.sendButton,
             {
-              backgroundColor:
-                colors.primary,
+              backgroundColor: colors.primary,
             },
           ]}
         >
+
           <Ionicons
             name="arrow-up"
             size={21}
             color="#FFFFFF"
           />
+
         </Pressable>
+
       </View>
+
     </SafeAreaView>
   );
 }
+
 
 /* =========================================================
    APP NAVIGATION
    ========================================================= */
 
 export default function App() {
-  const [darkMode, setDarkMode] =
-    useState(false);
+
+  const [darkMode, setDarkMode] = useState(false);
 
   const colors = darkMode
     ? COLORS.dark
@@ -2928,6 +2935,7 @@ export default function App() {
     <NavigationContainer
       theme={navigationTheme}
     >
+
       <StatusBar
         barStyle={
           darkMode
@@ -2939,6 +2947,7 @@ export default function App() {
       <Tab.Navigator
         initialRouteName="Home"
         screenOptions={({ route }) => ({
+
           headerShown: false,
 
           tabBarActiveTintColor:
@@ -2948,10 +2957,8 @@ export default function App() {
             colors.muted,
 
           tabBarStyle: {
-            backgroundColor:
-              colors.surface,
-            borderTopColor:
-              colors.border,
+            backgroundColor: colors.surface,
+            borderTopColor: colors.border,
             height: 68,
             paddingBottom: 8,
             paddingTop: 6,
@@ -2967,6 +2974,7 @@ export default function App() {
             focused,
             size,
           }) => {
+
             let iconName = "home-outline";
 
             if (route.name === "Home") {
@@ -2987,9 +2995,7 @@ export default function App() {
                 : "rocket-outline";
             }
 
-            if (
-              route.name === "Leaderboard"
-            ) {
+            if (route.name === "Leaderboard") {
               iconName = focused
                 ? "trophy"
                 : "trophy-outline";
@@ -3023,6 +3029,7 @@ export default function App() {
           },
         })}
       >
+
         <Tab.Screen
           name="Home"
           options={{
@@ -3138,16 +3145,20 @@ export default function App() {
             />
           )}
         </Tab.Screen>
+
       </Tab.Navigator>
+
     </NavigationContainer>
   );
 }
+
 
 /* =========================================================
    STYLES
    ========================================================= */
 
 const styles = StyleSheet.create({
+
   page: {
     padding: 18,
     paddingBottom: 35,
@@ -3175,12 +3186,6 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 14,
     marginTop: 5,
-  },
-
-  body: {
-    fontSize: 14,
-    lineHeight: 21,
-    marginTop: 7,
   },
 
   avatar: {
@@ -3218,7 +3223,7 @@ const styles = StyleSheet.create({
 
   cardTitle: {
     fontSize: 15,
-    fontWeight: "750",
+    fontWeight: "700",
   },
 
   courseMeta: {
@@ -3373,7 +3378,7 @@ const styles = StyleSheet.create({
 
   statValue: {
     fontSize: 22,
-    fontWeight: "850",
+    fontWeight: "800",
   },
 
   statLabel: {
@@ -3403,8 +3408,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     padding: 16,
     paddingTop: 45,
-    backgroundColor:
-      "rgba(0,0,0,0.52)",
+    backgroundColor: "rgba(0,0,0,0.52)",
     flexDirection: "row",
     alignItems: "flex-end",
     justifyContent: "space-between",
@@ -3421,7 +3425,6 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 21,
     fontWeight: "800",
-    marginTop: 3,
   },
 
   imageSubtitle: {
@@ -3434,8 +3437,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor:
-      "rgba(99,91,255,0.95)",
+    backgroundColor: "rgba(99,91,255,0.95)",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -3835,7 +3837,7 @@ const styles = StyleSheet.create({
 
   passportName: {
     fontSize: 20,
-    fontWeight: "850",
+    fontWeight: "800",
     marginTop: 10,
   },
 
@@ -3916,7 +3918,7 @@ const styles = StyleSheet.create({
 
   profileName: {
     fontSize: 18,
-    fontWeight: "850",
+    fontWeight: "800",
   },
 
   profileOption: {
@@ -3966,8 +3968,7 @@ const styles = StyleSheet.create({
 
   modalBackdrop: {
     flex: 1,
-    backgroundColor:
-      "rgba(0,0,0,0.55)",
+    backgroundColor: "rgba(0,0,0,0.55)",
     alignItems: "center",
     justifyContent: "center",
     padding: 22,
@@ -3981,7 +3982,7 @@ const styles = StyleSheet.create({
 
   modalTitle: {
     fontSize: 21,
-    fontWeight: "850",
+    fontWeight: "800",
     marginBottom: 5,
   },
 
@@ -4039,7 +4040,7 @@ const styles = StyleSheet.create({
 
   aiTitle: {
     fontSize: 16,
-    fontWeight: "850",
+    fontWeight: "800",
   },
 
   aiStatus: {
@@ -4141,6 +4142,7 @@ const styles = StyleSheet.create({
   },
 });
 
+
 /* =========================================================
    SAATH APP.JS COMPLETE
-   ========================================================= */ */
+   ========================================================= */*//
