@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "741038040699",
+    "project_id": "saath-v4",
+    "storage_bucket": "saath-v4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741038040699:android:6b2a1050e186db2d4aa4de",
+        "android_client_info": {
+          "package_name": "com.saathai.student"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "741038040699-nqu01uf6aokkdhn2tktdrvbpamt6mvjr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATtiVnNNMsRgpD2lkXUMv34w1hvRc-c4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "741038040699-nqu01uf6aokkdhn2tktdrvbpamt6mvjr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
