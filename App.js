@@ -10,12 +10,23 @@ import {
   Text,
   TextInput,
   View,
+  Image,
 } from "react-native";
-import { NavigationContainer, DarkTheme, DefaultTheme } from "@react-navigation/native";
+
+import {
+  NavigationContainer,
+  DarkTheme,
+  DefaultTheme,
+} from "@react-navigation/native";
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
+
+/* =========================================================
+   SAATH DESIGN SYSTEM
+   ========================================================= */
 
 const COLORS = {
   light: {
@@ -30,42 +41,75 @@ const COLORS = {
     green: "#16A34A",
     orange: "#F59E0B",
     red: "#EF4444",
+    blue: "#2563EB",
   },
+
   dark: {
-    bg: "#0B0D12",
-    surface: "#14171E",
-    surface2: "#1B1F28",
-    text: "#F5F7FA",
+    bg: "#080B14",
+    surface: "#111521",
+    surface2: "#191E2B",
+    text: "#F7F8FC",
     muted: "#9CA3AF",
-    border: "#272C36",
+    border: "#272D3A",
     primary: "#8178FF",
-    primarySoft: "#211E3E",
+    primarySoft: "#211F3E",
     green: "#4ADE80",
     orange: "#FBBF24",
     red: "#F87171",
+    blue: "#60A5FA",
   },
 };
 
+/* =========================================================
+   COMMON COMPONENTS
+   ========================================================= */
+
 function ProgressBar({ value, colors }) {
   return (
-    <View style={[styles.progressTrack, { backgroundColor: colors.surface2 }]}>
+    <View
+      style={[
+        styles.progressTrack,
+        { backgroundColor: colors.surface2 },
+      ]}
+    >
       <View
         style={[
           styles.progressFill,
-          { width: `${value}%`, backgroundColor: colors.primary },
+          {
+            width: `${Math.min(value, 100)}%`,
+            backgroundColor: colors.primary,
+          },
         ]}
       />
     </View>
   );
 }
 
-function SectionTitle({ title, action, onPress, colors }) {
+function SectionTitle({
+  title,
+  action,
+  onPress,
+  colors,
+}) {
   return (
     <View style={styles.sectionHeader}>
-      <Text style={[styles.sectionTitle, { color: colors.text }]}>{title}</Text>
+      <Text
+        style={[
+          styles.sectionTitle,
+          { color: colors.text },
+        ]}
+      >
+        {title}
+      </Text>
+
       {action && (
         <Pressable onPress={onPress}>
-          <Text style={[styles.actionText, { color: colors.primary }]}>
+          <Text
+            style={[
+              styles.actionText,
+              { color: colors.primary },
+            ]}
+          >
             {action}
           </Text>
         </Pressable>
@@ -74,29 +118,198 @@ function SectionTitle({ title, action, onPress, colors }) {
   );
 }
 
+/* =========================================================
+   HOME SCREEN
+   ========================================================= */
+
 function HomeScreen({ navigation, colors }) {
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.page}
     >
+      {/* HEADER */}
+
       <View style={styles.topRow}>
-        <View>
-          <Text style={[styles.eyebrow, { color: colors.muted }]}>
-            WELCOME BACK
+        <View style={{ flex: 1 }}>
+          <Text
+            style={[
+              styles.eyebrow,
+              { color: colors.muted },
+            ]}
+          >
+            WELCOME BACK 👋
           </Text>
-          <Text style={[styles.heading, { color: colors.text }]}>
+
+          <Text
+            style={[
+              styles.heading,
+              { color: colors.text },
+            ]}
+          >
             Build your future.
+          </Text>
+
+          <Text
+            style={[
+              styles.subtitle,
+              { color: colors.muted },
+            ]}
+          >
+            Learn. Build. Prove. Grow.
           </Text>
         </View>
 
         <Pressable
-          style={[styles.avatar, { backgroundColor: colors.primarySoft }]}
-          onPress={() => navigation.navigate("Profile")}
+          style={[
+            styles.avatar,
+            {
+              backgroundColor:
+                colors.primarySoft,
+            },
+          ]}
+          onPress={() =>
+            navigation.navigate("Profile")
+          }
         >
-          <Text style={[styles.avatarText, { color: colors.primary }]}>A</Text>
+          <Text
+            style={[
+              styles.avatarText,
+              { color: colors.primary },
+            ]}
+          >
+            A
+          </Text>
         </Pressable>
       </View>
+
+      {/* DAILY STREAK */}
+
+      <View
+        style={[
+          styles.streakCard,
+          {
+            backgroundColor: colors.surface,
+            borderColor: colors.border,
+          },
+        ]}
+      >
+        <View
+          style={[
+            styles.streakIcon,
+            {
+              backgroundColor:
+                colors.primarySoft,
+            },
+          ]}
+        >
+          <Text style={{ fontSize: 23 }}>🔥</Text>
+        </View>
+
+        <View style={{ flex: 1 }}>
+          <Text
+            style={[
+              styles.cardTitle,
+              { color: colors.text },
+            ]}
+          >
+            7 day streak
+          </Text>
+
+          <Text
+            style={[
+              styles.courseMeta,
+              { color: colors.muted },
+            ]}
+          >
+            Keep learning every day!
+          </Text>
+        </View>
+
+        <Text
+          style={[
+            styles.xpText,
+            { color: colors.primary },
+          ]}
+        >
+          +120 XP
+        </Text>
+      </View>
+
+      {/* SUNDAY TEST */}
+
+      <Pressable
+        onPress={() =>
+          Alert.alert(
+            "Sunday All-India Test 🇮🇳",
+            "Weekly test screen will open here. Your score will be used for the secure national leaderboard."
+          )
+        }
+        style={[
+          styles.testBanner,
+          {
+            backgroundColor:
+              colors.primarySoft,
+            borderColor:
+              colors.primary,
+          },
+        ]}
+      >
+        <View style={styles.testBannerTop}>
+          <View style={styles.testBadge}>
+            <Text style={styles.testBadgeText}>
+              🏆 EVERY SUNDAY
+            </Text>
+          </View>
+
+          <Text
+            style={[
+              styles.liveText,
+              { color: colors.green },
+            ]}
+          >
+            ● WEEKLY
+          </Text>
+        </View>
+
+        <Text
+          style={[
+            styles.testTitle,
+            { color: colors.text },
+          ]}
+        >
+          All-India Student Test
+        </Text>
+
+        <Text
+          style={[
+            styles.testDescription,
+            { color: colors.muted },
+          ]}
+        >
+          Compete with students across India and
+          see your rank on the national leaderboard.
+        </Text>
+
+        <View style={styles.testBottom}>
+          <Text
+            style={[
+              styles.testReward,
+              { color: colors.primary },
+            ]}
+          >
+            🥇 Top 10 • 🎁 Rewards • ⭐ XP
+          </Text>
+
+          <Ionicons
+            name="arrow-forward-circle"
+            size={30}
+            color={colors.primary}
+          />
+        </View>
+      </Pressable>
+
+      {/* TODAY'S MISSION */}
 
       <View
         style={[
@@ -108,100 +321,189 @@ function HomeScreen({ navigation, colors }) {
         ]}
       >
         <View style={styles.heroBadge}>
-          <Ionicons name="sparkles" size={15} color={colors.primary} />
-          <Text style={[styles.heroBadgeText, { color: colors.primary }]}>
+          <Ionicons
+            name="sparkles"
+            size={15}
+            color={colors.primary}
+          />
+
+          <Text
+            style={[
+              styles.heroBadgeText,
+              { color: colors.primary },
+            ]}
+          >
             TODAY'S MISSION
           </Text>
         </View>
 
-        <Text style={[styles.heroTitle, { color: colors.text }]}>
-          Create a 15-second video edit
+        <Text
+          style={[
+            styles.heroTitle,
+            { color: colors.text },
+          ]}
+        >
+          Create a 15-second video edit 🎬
         </Text>
 
-        <Text style={[styles.body, { color: colors.muted }]}>
-          Practice one real skill today and add your progress to your Skill
-          Passport.
+        <Text
+          style={[
+            styles.body,
+            { color: colors.muted },
+          ]}
+        >
+          Complete one real-world challenge today
+          and earn XP for your Skill Passport.
         </Text>
 
         <Pressable
-          style={[styles.primaryButton, { backgroundColor: colors.primary }]}
-          onPress={() => navigation.navigate("Skills")}
+          style={[
+            styles.primaryButton,
+            {
+              backgroundColor:
+                colors.primary,
+            },
+          ]}
+          onPress={() =>
+            navigation.navigate("Skills")
+          }
         >
-          <Text style={styles.primaryButtonText}>Start Mission</Text>
-          <Ionicons name="arrow-forward" size={18} color="#fff" />
+          <Text style={styles.primaryButtonText}>
+            Start Mission
+          </Text>
+
+          <Ionicons
+            name="arrow-forward"
+            size={18}
+            color="#fff"
+          />
         </Pressable>
       </View>
 
-      <SectionTitle title="Your progress" colors={colors} />
+      {/* PROGRESS */}
+
+      <SectionTitle
+        title="Your progress"
+        colors={colors}
+      />
 
       <View style={styles.statsRow}>
-        {[
-          ["3", "Skills"],
-          ["4", "Projects"],
-          ["12", "Lessons"],
-        ].map(([value, label]) => (
-          <View
-            key={label}
-            style={[
-              styles.statBox,
-              { backgroundColor: colors.surface, borderColor: colors.border },
-            ]}
-          >
-            <Text style={[styles.statValue, { color: colors.text }]}>
-              {value}
-            </Text>
-            <Text style={[styles.statLabel, { color: colors.muted }]}>
-              {label}
-            </Text>
-          </View>
-        ))}
+        <StatBox
+          value="420"
+          label="XP"
+          colors={colors}
+        />
+
+        <StatBox
+          value="7"
+          label="Day Streak"
+          colors={colors}
+        />
+
+        <StatBox
+          value="12"
+          label="Lessons"
+          colors={colors}
+        />
       </View>
+
+      {/* CONTINUE LEARNING */}
 
       <SectionTitle
         title="Continue learning"
         action="View all"
         colors={colors}
-        onPress={() => navigation.navigate("Learn")}
+        onPress={() =>
+          navigation.navigate("Learn")
+        }
       />
 
       <Pressable
         style={[
-          styles.courseRow,
-          { backgroundColor: colors.surface, borderColor: colors.border },
+          styles.learningHero,
+          {
+            backgroundColor:
+              colors.surface,
+            borderColor:
+              colors.border,
+          },
         ]}
         onPress={() =>
           Alert.alert(
             "Video Editing",
-            "Continue your next lesson from where you left off."
+            "Continue your next lesson."
           )
         }
       >
-        <View style={[styles.courseIcon, { backgroundColor: colors.primarySoft }]}>
-          <Ionicons name="videocam" size={22} color={colors.primary} />
-        </View>
+        <Image
+          source={{
+            uri:
+              "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80",
+          }}
+          style={styles.learningImage}
+        />
 
-        <View style={{ flex: 1 }}>
-          <Text style={[styles.courseTitle, { color: colors.text }]}>
-            Video Editing
-          </Text>
-          <Text style={[styles.courseMeta, { color: colors.muted }]}>
-            12 lessons • Intermediate
-          </Text>
-          <ProgressBar value={68} colors={colors} />
-        </View>
+        <View style={styles.learningOverlay}>
+          <View>
+            <Text
+              style={styles.imageLabel}
+            >
+              CREATOR SKILL
+            </Text>
 
-        <Text style={[styles.percent, { color: colors.primary }]}>68%</Text>
+            <Text
+              style={styles.imageTitle}
+            >
+              Video Editing
+            </Text>
+
+            <Text
+              style={styles.imageSubtitle}
+            >
+              68% complete
+            </Text>
+          </View>
+
+          <View
+            style={styles.playCircle}
+          >
+            <Ionicons
+              name="play"
+              size={20}
+              color="#fff"
+            />
+          </View>
+        </View>
       </Pressable>
 
-      <SectionTitle title="Quick access" colors={colors} />
+      {/* QUICK ACCESS */}
+
+      <SectionTitle
+        title="Explore SAATH"
+        colors={colors}
+      />
 
       <View style={styles.quickGrid}>
         <QuickAction
           icon="sparkles-outline"
           title="SAATH AI"
-          subtitle="Ask anything"
+          subtitle="Ask & learn"
           colors={colors}
-          onPress={() => navigation.navigate("AI")}
+          onPress={() =>
+            navigation.navigate("AI")
+          }
+        />
+
+        <QuickAction
+          icon="trophy-outline"
+          title="Leaderboard"
+          subtitle="Top students"
+          colors={colors}
+          onPress={() =>
+            navigation.navigate(
+              "Leaderboard"
+            )
+          }
         />
 
         <QuickAction
@@ -212,7 +514,7 @@ function HomeScreen({ navigation, colors }) {
           onPress={() =>
             Alert.alert(
               "Project Lab",
-              "Choose a project from your Skills section and start building."
+              "Choose a project and start building."
             )
           }
         />
@@ -222,50 +524,200 @@ function HomeScreen({ navigation, colors }) {
           title="Passport"
           subtitle="Your proof"
           colors={colors}
-          onPress={() => navigation.navigate("Passport")}
-        />
-
-        <QuickAction
-          icon="trending-up-outline"
-          title="Growth Path"
-          subtitle="What's next?"
-          colors={colors}
           onPress={() =>
-            Alert.alert(
-              "Growth Path",
-              "Keep practicing your strongest skill, then build a project to prove it."
-            )
+            navigation.navigate("Passport")
           }
         />
+      </View>
+
+      {/* INDIA COMMUNITY */}
+
+      <View
+        style={[
+          styles.communityCard,
+          {
+            backgroundColor:
+              colors.surface,
+            borderColor:
+              colors.border,
+          },
+        ]}
+      >
+        <Text
+          style={[
+            styles.communityEmoji,
+          ]}
+        >
+          🇮🇳
+        </Text>
+
+        <View style={{ flex: 1 }}>
+          <Text
+            style={[
+              styles.cardTitle,
+              { color: colors.text },
+            ]}
+          >
+            Students across India
+          </Text>
+
+          <Text
+            style={[
+              styles.courseMeta,
+              { color: colors.muted },
+            ]}
+          >
+            Learn together. Compete fairly.
+            Grow together.
+          </Text>
+        </View>
+
+        <Text
+          style={[
+            styles.communityArrow,
+            { color: colors.primary },
+          ]}
+        >
+          →
+        </Text>
       </View>
     </ScrollView>
   );
 }
 
-function QuickAction({ icon, title, subtitle, colors, onPress }) {
+/* =========================================================
+   SMALL COMPONENTS
+   ========================================================= */
+
+function StatBox({
+  value,
+  label,
+  colors,
+}) {
+  return (
+    <View
+      style={[
+        styles.statBox,
+        {
+          backgroundColor:
+            colors.surface,
+          borderColor:
+            colors.border,
+        },
+      ]}
+    >
+      <Text
+        style={[
+          styles.statValue,
+          { color: colors.text },
+        ]}
+      >
+        {value}
+      </Text>
+
+      <Text
+        style={[
+          styles.statLabel,
+          { color: colors.muted },
+        ]}
+      >
+        {label}
+      </Text>
+    </View>
+  );
+}
+
+function QuickAction({
+  icon,
+  title,
+  subtitle,
+  colors,
+  onPress,
+}) {
   return (
     <Pressable
       onPress={onPress}
       style={[
         styles.quickCard,
-        { backgroundColor: colors.surface, borderColor: colors.border },
+        {
+          backgroundColor:
+            colors.surface,
+          borderColor:
+            colors.border,
+        },
       ]}
     >
-      <Ionicons name={icon} size={23} color={colors.primary} />
-      <Text style={[styles.quickTitle, { color: colors.text }]}>{title}</Text>
-      <Text style={[styles.quickSubtitle, { color: colors.muted }]}>
+      <View
+        style={[
+          styles.quickIcon,
+          {
+            backgroundColor:
+              colors.primarySoft,
+          },
+        ]}
+      >
+        <Ionicons
+          name={icon}
+          size={22}
+          color={colors.primary}
+        />
+      </View>
+
+      <Text
+        style={[
+          styles.quickTitle,
+          { color: colors.text },
+        ]}
+      >
+        {title}
+      </Text>
+
+      <Text
+        style={[
+          styles.quickSubtitle,
+          { color: colors.muted },
+        ]}
+      >
         {subtitle}
       </Text>
     </Pressable>
   );
 }
 
+/* =========================================================
+   LEARN SCREEN
+   ========================================================= */
+
 function LearnScreen({ colors }) {
   const courses = [
-    ["Video Editing", "12 lessons", "68%", "videocam"],
-    ["Graphic Design", "10 lessons", "35%", "color-palette"],
-    ["Coding Basics", "16 lessons", "20%", "code-slash"],
-    ["Business Basics", "8 lessons", "42%", "briefcase"],
+    [
+      "Video Editing",
+      "12 lessons",
+      68,
+      "videocam",
+      "🎬",
+    ],
+    [
+      "Graphic Design",
+      "10 lessons",
+      35,
+      "color-palette",
+      "🎨",
+    ],
+    [
+      "Coding Basics",
+      "16 lessons",
+      20,
+      "code-slash",
+      "💻",
+    ],
+    [
+      "Business Basics",
+      "8 lessons",
+      42,
+      "briefcase",
+      "💼",
+    ],
   ];
 
   return (
@@ -273,59 +725,400 @@ function LearnScreen({ colors }) {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.page}
     >
-      <Text style={[styles.eyebrow, { color: colors.muted }]}>LEARN</Text>
-      <Text style={[styles.heading, { color: colors.text }]}>
-        Skills that move you forward.
+      <Text
+        style={[
+          styles.eyebrow,
+          { color: colors.muted },
+        ]}
+      >
+        LEARN
       </Text>
 
-      <Text style={[styles.body, { color: colors.muted }]}>
-        Learn a concept, practice it, then prove it with a real project.
+      <Text
+        style={[
+          styles.heading,
+          { color: colors.text },
+        ]}
+      >
+        Learn something useful.
       </Text>
 
-      <View style={styles.searchFake}>
-        <Ionicons name="search" size={19} color={colors.muted} />
-        <Text style={{ color: colors.muted, marginLeft: 10 }}>
-          Search skills and lessons
+      <Text
+        style={[
+          styles.body,
+          { color: colors.muted },
+        ]}
+      >
+        Concepts → Practice → Projects → Proof.
+      </Text>
+
+      {/* BOARD PREP */}
+
+      <Pressable
+        style={[
+          styles.boardCard,
+          {
+            backgroundColor:
+              colors.primarySoft,
+            borderColor:
+              colors.primary,
+          },
+        ]}
+        onPress={() =>
+          Alert.alert(
+            "Board Preparation",
+            "Class, board, subjects and chapter-wise preparation will be personalized here."
+          )
+        }
+      >
+        <View style={styles.boardEmoji}>
+          📚
+        </View>
+
+        <View style={{ flex: 1 }}>
+          <Text
+            style={[
+              styles.cardTitle,
+              { color: colors.text },
+            ]}
+          >
+            Board Preparation
+          </Text>
+
+          <Text
+            style={[
+              styles.courseMeta,
+              { color: colors.muted },
+            ]}
+          >
+            Chapters • Practice • Tests • Revision
+          </Text>
+        </View>
+
+        <Ionicons
+          name="chevron-forward"
+          size={22}
+          color={colors.primary}
+        />
+      </Pressable>
+
+      <SectionTitle
+        title="Skills for the future"
+        colors={colors}
+      />
+
+      {courses.map(
+        ([
+          title,
+          lessons,
+          progress,
+          icon,
+          emoji,
+        ]) => (
+          <Pressable
+            key={title}
+            onPress={() =>
+              Alert.alert(
+                title,
+                `${lessons}\nProgress: ${progress}%`
+              )
+            }
+            style={[
+              styles.learningCard,
+              {
+                backgroundColor:
+                  colors.surface,
+                borderColor:
+                  colors.border,
+              },
+            ]}
+          >
+            <View
+              style={[
+                styles.learningIcon,
+                {
+                  backgroundColor:
+                    colors.primarySoft,
+                },
+              ]}
+            >
+              <Text style={{ fontSize: 22 }}>
+                {emoji}
+              </Text>
+            </View>
+
+            <View style={{ flex: 1 }}>
+              <Text
+                style={[
+                  styles.cardTitle,
+                  { color: colors.text },
+                ]}
+              >
+                {title}
+              </Text>
+
+              <Text
+                style={[
+                  styles.courseMeta,
+                  { color: colors.muted },
+                ]}
+              >
+                {lessons}
+              </Text>
+
+              <ProgressBar
+                value={progress}
+                colors={colors}
+              />
+            </View>
+
+            <Text
+              style={[
+                styles.percent,
+                { color: colors.primary },
+              ]}
+            >
+              {progress}%
+            </Text>
+          </Pressable>
+        )
+      )}
+
+      {/* LEARNING TIP */}
+
+      <View
+        style={[
+          styles.tipCard,
+          {
+            backgroundColor:
+              colors.surface,
+            borderColor:
+              colors.border,
+          },
+        ]}
+      >
+        <Text style={{ fontSize: 27 }}>
+          💡
         </Text>
+
+        <View style={{ flex: 1 }}>
+          <Text
+            style={[
+              styles.cardTitle,
+              { color: colors.text },
+            ]}
+          >
+            SAATH learning rule
+          </Text>
+
+          <Text
+            style={[
+              styles.courseMeta,
+              { color: colors.muted },
+            ]}
+          >
+            Don't just watch. Practice what you
+            learn and build something.
+          </Text>
+        </View>
+      </View>
+    </ScrollView>
+  );
+}
+
+/* =========================================================
+   END OF PART 1
+   =========================================================/* =========================================================
+   SKILLS SCREEN
+   ========================================================= */
+
+function SkillsScreen({ colors }) {
+  const skills = [
+    {
+      title: "Video Editing",
+      subtitle: "Create reels, shorts & stories",
+      emoji: "🎬",
+      progress: 68,
+    },
+    {
+      title: "Graphic Design",
+      subtitle: "Posters, thumbnails & designs",
+      emoji: "🎨",
+      progress: 35,
+    },
+    {
+      title: "Coding",
+      subtitle: "Learn to build real apps",
+      emoji: "💻",
+      progress: 20,
+    },
+    {
+      title: "AI Tools",
+      subtitle: "Use AI to learn & create",
+      emoji: "🤖",
+      progress: 45,
+    },
+    {
+      title: "Problem Solving",
+      subtitle: "Think better. Solve better.",
+      emoji: "🧠",
+      progress: 25,
+    },
+    {
+      title: "App Development",
+      subtitle: "Turn ideas into apps",
+      emoji: "📱",
+      progress: 10,
+    },
+  ];
+
+  return (
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.page}
+    >
+      <Text
+        style={[
+          styles.eyebrow,
+          { color: colors.muted },
+        ]}
+      >
+        SKILL LAB
+      </Text>
+
+      <Text
+        style={[
+          styles.heading,
+          { color: colors.text },
+        ]}
+      >
+        Build real skills.
+      </Text>
+
+      <Text
+        style={[
+          styles.body,
+          { color: colors.muted },
+        ]}
+      >
+        Pick a skill, complete missions and
+        build projects you can show.
+      </Text>
+
+      <View
+        style={[
+          styles.skillHero,
+          {
+            backgroundColor:
+              colors.surface,
+            borderColor:
+              colors.border,
+          },
+        ]}
+      >
+        <View style={styles.skillHeroEmoji}>
+          🚀
+        </View>
+
+        <View style={{ flex: 1 }}>
+          <Text
+            style={[
+              styles.cardTitle,
+              { color: colors.text },
+            ]}
+          >
+            Your Skill Passport
+          </Text>
+
+          <Text
+            style={[
+              styles.courseMeta,
+              { color: colors.muted },
+            ]}
+          >
+            3 skills unlocked
+          </Text>
+        </View>
+
+        <Ionicons
+          name="chevron-forward"
+          size={22}
+          color={colors.primary}
+        />
       </View>
 
-      <SectionTitle title="Your courses" colors={colors} />
+      <SectionTitle
+        title="Explore skills"
+        colors={colors}
+      />
 
-      {courses.map(([title, lessons, progress, icon]) => (
+      {skills.map((skill) => (
         <Pressable
-          key={title}
+          key={skill.title}
           onPress={() =>
             Alert.alert(
-              title,
-              `${lessons} available.\nCurrent progress: ${progress}`
+              skill.title,
+              "Skill learning path will open here."
             )
           }
           style={[
-            styles.learningCard,
-            { backgroundColor: colors.surface, borderColor: colors.border },
+            styles.skillCard,
+            {
+              backgroundColor:
+                colors.surface,
+              borderColor:
+                colors.border,
+            },
           ]}
         >
           <View
-            style={[styles.learningIcon, { backgroundColor: colors.primarySoft }]}
+            style={[
+              styles.skillEmoji,
+              {
+                backgroundColor:
+                  colors.primarySoft,
+              },
+            ]}
           >
-            <Ionicons name={icon} size={23} color={colors.primary} />
+            <Text style={{ fontSize: 27 }}>
+              {skill.emoji}
+            </Text>
           </View>
 
           <View style={{ flex: 1 }}>
-            <Text style={[styles.cardTitle, { color: colors.text }]}>
-              {title}
-            </Text>
-            <Text style={[styles.courseMeta, { color: colors.muted }]}>
-              {lessons}
+            <Text
+              style={[
+                styles.cardTitle,
+                { color: colors.text },
+              ]}
+            >
+              {skill.title}
             </Text>
 
-            <View style={{ marginTop: 12 }}>
-              <ProgressBar value={parseInt(progress)} colors={colors} />
+            <Text
+              style={[
+                styles.courseMeta,
+                { color: colors.muted },
+              ]}
+            >
+              {skill.subtitle}
+            </Text>
+
+            <View style={{ marginTop: 9 }}>
+              <ProgressBar
+                value={skill.progress}
+                colors={colors}
+              />
             </View>
           </View>
 
-          <Text style={[styles.percent, { color: colors.primary }]}>
-            {progress}
+          <Text
+            style={[
+              styles.percent,
+              { color: colors.primary },
+            ]}
+          >
+            {skill.progress}%
           </Text>
         </Pressable>
       ))}
@@ -333,135 +1126,771 @@ function LearnScreen({ colors }) {
   );
 }
 
-function SkillsScreen({ colors }) {
-  const [started, setStarted] = useState({});
+/* =========================================================
+   LEADERBOARD DATA
+   ========================================================= */
 
-  const skills = [
-    {
-      title: "Video Editing",
-      level: "Intermediate",
-      progress: 68,
-      icon: "videocam",
-    },
-    {
-      title: "Graphic Design",
-      level: "Beginner",
-      progress: 35,
-      icon: "color-palette",
-    },
-    {
-      title: "Coding",
-      level: "Beginner",
-      progress: 20,
-      icon: "code-slash",
-    },
-    {
-      title: "Business",
-      level: "Beginner",
-      progress: 42,
-      icon: "briefcase",
-    },
-  ];
+/*
+  DEMO DATA ONLY.
+
+  Production version:
+  - score must come from secure backend
+  - student cannot directly write rank
+  - weekly leaderboard must be calculated server-side
+  - public profile should use nickname/avatar by default
+*/
+
+const DEMO_LEADERBOARD = [
+  {
+    rank: 1,
+    name: "Aarav",
+    city: "Delhi",
+    xp: 9850,
+    avatar: "🧑‍💻",
+  },
+  {
+    rank: 2,
+    name: "Ananya",
+    city: "Mumbai",
+    xp: 9420,
+    avatar: "👩‍🎓",
+  },
+  {
+    rank: 3,
+    name: "Vihaan",
+    city: "Bengaluru",
+    xp: 9180,
+    avatar: "🧑‍🚀",
+  },
+  {
+    rank: 4,
+    name: "Diya",
+    city: "Pune",
+    xp: 8870,
+    avatar: "👩‍💻",
+  },
+  {
+    rank: 5,
+    name: "Kabir",
+    city: "Jaipur",
+    xp: 8510,
+    avatar: "🧑‍🎨",
+  },
+  {
+    rank: 6,
+    name: "Meera",
+    city: "Indore",
+    xp: 8230,
+    avatar: "👩‍🔬",
+  },
+  {
+    rank: 7,
+    name: "Arjun",
+    city: "Hyderabad",
+    xp: 8010,
+    avatar: "🧑‍🚀",
+  },
+  {
+    rank: 8,
+    name: "Ishita",
+    city: "Chennai",
+    xp: 7840,
+    avatar: "👩‍💻",
+  },
+  {
+    rank: 9,
+    name: "Rohan",
+    city: "Kolkata",
+    xp: 7650,
+    avatar: "🧑‍🎓",
+  },
+  {
+    rank: 10,
+    name: "Sara",
+    city: "Ahmedabad",
+    xp: 7420,
+    avatar: "👩‍🎨",
+  },
+];
+
+/* =========================================================
+   WEEK HELPERS
+   ========================================================= */
+
+function getCurrentWeekId() {
+  const date = new Date();
+
+  date.setHours(0, 0, 0, 0);
+
+  date.setDate(
+    date.getDate() - date.getDay()
+  );
+
+  return date.toISOString().slice(0, 10);
+}
+
+function getDaysUntilSunday() {
+  const now = new Date();
+
+  const nextSunday = new Date(now);
+
+  nextSunday.setDate(
+    now.getDate() +
+      (now.getDay() === 0
+        ? 7
+        : 7 - now.getDay())
+  );
+
+  nextSunday.setHours(0, 0, 0, 0);
+
+  return Math.max(
+    0,
+    Math.ceil(
+      (nextSunday.getTime() -
+        now.getTime()) /
+        86400000
+    )
+  );
+}
+
+/* =========================================================
+   LEADERBOARD SCREEN
+   ========================================================= */
+
+function LeaderboardScreen({ colors }) {
+  const weekId = useMemo(
+    () => getCurrentWeekId(),
+    []
+  );
+
+  const daysLeft = useMemo(
+    () => getDaysUntilSunday(),
+    []
+  );
 
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.page}
     >
-      <Text style={[styles.eyebrow, { color: colors.muted }]}>SKILLS</Text>
-      <Text style={[styles.heading, { color: colors.text }]}>
-        Learn by doing.
+      <Text
+        style={[
+          styles.eyebrow,
+          { color: colors.muted },
+        ]}
+      >
+        INDIA LEADERBOARD 🇮🇳
       </Text>
 
-      <Text style={[styles.body, { color: colors.muted }]}>
-        Turn knowledge into practical skills through small projects.
+      <Text
+        style={[
+          styles.heading,
+          { color: colors.text },
+        ]}
+      >
+        Top 10 Students
       </Text>
 
-      <SectionTitle title="My skills" colors={colors} />
+      <Text
+        style={[
+          styles.body,
+          { color: colors.muted },
+        ]}
+      >
+        This week's highest performers.
+      </Text>
 
-      {skills.map((skill) => (
-        <View
-          key={skill.title}
-          style={[
-            styles.skillCard,
-            { backgroundColor: colors.surface, borderColor: colors.border },
-          ]}
-        >
-          <View style={[styles.skillIcon, { backgroundColor: colors.primarySoft }]}>
-            <Ionicons name={skill.icon} size={23} color={colors.primary} />
-          </View>
-
-          <View style={{ flex: 1 }}>
-            <View style={styles.skillTop}>
-              <Text style={[styles.cardTitle, { color: colors.text }]}>
-                {skill.title}
-              </Text>
-
-              <Text style={[styles.level, { color: colors.muted }]}>
-                {skill.level}
-              </Text>
-            </View>
-
-            <ProgressBar value={skill.progress} colors={colors} />
-
-            <Text style={[styles.courseMeta, { color: colors.muted }]}>
-              {skill.progress}% complete
-            </Text>
-
-            <Pressable
-              style={[
-                styles.smallButton,
-                {
-                  backgroundColor: started[skill.title]
-                    ? colors.surface2
-                    : colors.primary,
-                },
-              ]}
-              onPress={() => {
-                setStarted((prev) => ({
-                  ...prev,
-                  [skill.title]: !prev[skill.title],
-                }));
-              }}
-            >
-              <Text
-                style={{
-                  color: started[skill.title] ? colors.text : "#fff",
-                  fontWeight: "700",
-                }}
-              >
-                {started[skill.title] ? "In Progress" : "Start Practice"}
-              </Text>
-            </Pressable>
-          </View>
-        </View>
-      ))}
+      {/* WEEK STATUS */}
 
       <View
         style={[
-          styles.projectBanner,
-          { backgroundColor: colors.primarySoft },
+          styles.weekCard,
+          {
+            backgroundColor:
+              colors.primarySoft,
+            borderColor:
+              colors.primary,
+          },
         ]}
       >
-        <Ionicons name="flask" size={25} color={colors.primary} />
-        <View style={{ flex: 1, marginLeft: 13 }}>
-          <Text style={[styles.cardTitle, { color: colors.text }]}>
-            Project Lab
+        <View style={{ flex: 1 }}>
+          <Text
+            style={[
+              styles.cardTitle,
+              { color: colors.text },
+            ]}
+          >
+            🏆 Weekly Challenge
           </Text>
-          <Text style={[styles.courseMeta, { color: colors.muted }]}>
-            Build something real and add it to your Passport.
+
+          <Text
+            style={[
+              styles.courseMeta,
+              { color: colors.muted },
+            ]}
+          >
+            New leaderboard every Sunday
           </Text>
         </View>
+
+        <View style={styles.daysCircle}>
+          <Text
+            style={[
+              styles.daysNumber,
+              { color: colors.primary },
+            ]}
+          >
+            {daysLeft}
+          </Text>
+
+          <Text
+            style={[
+              styles.daysLabel,
+              { color: colors.muted },
+            ]}
+          >
+            days
+          </Text>
+        </View>
+      </View>
+
+      {/* TOP 3 */}
+
+      <View style={styles.podiumRow}>
+        {DEMO_LEADERBOARD.slice(0, 3).map(
+          (student, index) => (
+            <View
+              key={student.rank}
+              style={[
+                styles.podiumCard,
+                {
+                  backgroundColor:
+                    colors.surface,
+                  borderColor:
+                    colors.border,
+                  marginTop:
+                    index === 0
+                      ? 0
+                      : index === 1
+                      ? 22
+                      : 34,
+                },
+              ]}
+            >
+              <Text
+                style={styles.podiumMedal}
+              >
+                {index === 0
+                  ? "🥇"
+                  : index === 1
+                  ? "🥈"
+                  : "🥉"}
+              </Text>
+
+              <View
+                style={[
+                  styles.largeAvatar,
+                  {
+                    backgroundColor:
+                      colors.primarySoft,
+                  },
+                ]}
+              >
+                <Text style={{ fontSize: 27 }}>
+                  {student.avatar}
+                </Text>
+              </View>
+
+              <Text
+                style={[
+                  styles.podiumName,
+                  { color: colors.text },
+                ]}
+              >
+                {student.name}
+              </Text>
+
+              <Text
+                style={[
+                  styles.podiumXP,
+                  { color: colors.primary },
+                ]}
+              >
+                {student.xp} XP
+              </Text>
+            </View>
+          )
+        )}
+      </View>
+
+      {/* FULL TOP 10 */}
+
+      <SectionTitle
+        title="Top 10"
+        colors={colors}
+      />
+
+      {DEMO_LEADERBOARD.map(
+        (student) => (
+          <View
+            key={student.rank}
+            style={[
+              styles.rankRow,
+              {
+                backgroundColor:
+                  colors.surface,
+                borderColor:
+                  colors.border,
+              },
+            ]}
+          >
+            <View style={styles.rankNumber}>
+              <Text
+                style={[
+                  styles.rankText,
+                  { color: colors.muted },
+                ]}
+              >
+                #{student.rank}
+              </Text>
+            </View>
+
+            <View
+              style={[
+                styles.smallAvatar,
+                {
+                  backgroundColor:
+                    colors.primarySoft,
+                },
+              ]}
+            >
+              <Text style={{ fontSize: 20 }}>
+                {student.avatar}
+              </Text>
+            </View>
+
+            <View style={{ flex: 1 }}>
+              <Text
+                style={[
+                  styles.rankName,
+                  { color: colors.text },
+                ]}
+              >
+                {student.name}
+              </Text>
+
+              <Text
+                style={[
+                  styles.rankCity,
+                  { color: colors.muted },
+                ]}
+              >
+                {student.city}
+              </Text>
+            </View>
+
+            <Text
+              style={[
+                styles.rankXP,
+                { color: colors.primary },
+              ]}
+            >
+              {student.xp} XP
+            </Text>
+          </View>
+        )
+      )}
+
+      {/* REWARD */}
+
+      <View
+        style={[
+          styles.rewardCard,
+          {
+            backgroundColor:
+              colors.surface,
+            borderColor:
+              colors.border,
+          },
+        ]}
+      >
+        <Text style={{ fontSize: 32 }}>
+          🎁
+        </Text>
+
+        <View style={{ flex: 1 }}>
+          <Text
+            style={[
+              styles.cardTitle,
+              { color: colors.text },
+            ]}
+          >
+            Top 10 Reward
+          </Text>
+
+          <Text
+            style={[
+              styles.courseMeta,
+              { color: colors.muted },
+            ]}
+          >
+            Finish in the Top 10 three times in
+            one year to become eligible for a
+            special SAATH reward.
+          </Text>
+        </View>
+      </View>
+
+      {/* SECURITY NOTE */}
+
+      <View
+        style={[
+          styles.securityCard,
+          {
+            backgroundColor:
+              colors.surface2,
+          },
+        ]}
+      >
+        <Ionicons
+          name="shield-checkmark"
+          size={23}
+          color={colors.green}
+        />
+
+        <Text
+          style={[
+            styles.securityText,
+            { color: colors.muted },
+          ]}
+        >
+          Scores and ranks will be verified by
+          SAATH servers. Students won't be able
+          to edit leaderboard scores directly.
+        </Text>
+      </View>
+
+      <Text
+        style={[
+          styles.weekIdText,
+          { color: colors.muted },
+        ]}
+      >
+        Current week: {weekId}
+      </Text>
+    </ScrollView>
+  );
+}
+
+/* =========================================================
+   SUNDAY TEST SCREEN
+   ========================================================= */
+
+function TestScreen({ colors }) {
+  const [selected, setSelected] =
+    useState(null);
+
+  const [submitted, setSubmitted] =
+    useState(false);
+
+  const options = [
+    "Photosynthesis",
+    "Respiration",
+    "Transpiration",
+    "Germination",
+  ];
+
+  function submitAnswer() {
+    if (selected === null) {
+      Alert.alert(
+        "Choose an answer",
+        "Please select one option first."
+      );
+      return;
+    }
+
+    setSubmitted(true);
+  }
+
+  return (
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.page}
+    >
+      <Text
+        style={[
+          styles.eyebrow,
+          { color: colors.muted },
+        ]}
+      >
+        SUNDAY TEST 🏆
+      </Text>
+
+      <Text
+        style={[
+          styles.heading,
+          { color: colors.text },
+        ]}
+      >
+        All-India Test
+      </Text>
+
+      <Text
+        style={[
+          styles.body,
+          { color: colors.muted },
+        ]}
+      >
+        Test your knowledge and compete fairly
+        with students across India.
+      </Text>
+
+      {/* TEST INFO */}
+
+      <View
+        style={[
+          styles.testInfoCard,
+          {
+            backgroundColor:
+              colors.primarySoft,
+            borderColor:
+              colors.primary,
+          },
+        ]}
+      >
+        <View style={styles.infoItem}>
+          <Text style={styles.infoEmoji}>
+            📝
+          </Text>
+          <Text
+            style={[
+              styles.infoText,
+              { color: colors.text },
+            ]}
+          >
+            20 Questions
+          </Text>
+        </View>
+
+        <View style={styles.infoItem}>
+          <Text style={styles.infoEmoji}>
+            ⏱️
+          </Text>
+          <Text
+            style={[
+              styles.infoText,
+              { color: colors.text },
+            ]}
+          >
+            Timed
+          </Text>
+        </View>
+
+        <View style={styles.infoItem}>
+          <Text style={styles.infoEmoji}>
+            ⭐
+          </Text>
+          <Text
+            style={[
+              styles.infoText,
+              { color: colors.text },
+            ]}
+          >
+            XP Reward
+          </Text>
+        </View>
+      </View>
+
+      {/* QUESTION */}
+
+      <View
+        style={[
+          styles.questionCard,
+          {
+            backgroundColor:
+              colors.surface,
+            borderColor:
+              colors.border,
+          },
+        ]}
+      >
+        <Text
+          style={[
+            styles.questionNumber,
+            { color: colors.primary },
+          ]}
+        >
+          QUESTION 1 / 20
+        </Text>
+
+        <Text
+          style={[
+            styles.question,
+            { color: colors.text },
+          ]}
+        >
+          Which process do green plants use
+          to make their food?
+        </Text>
+
+        {options.map(
+          (option, index) => {
+            const isSelected =
+              selected === index;
+
+            return (
+              <Pressable
+                key={option}
+                onPress={() =>
+                  !submitted &&
+                  setSelected(index)
+                }
+                style={[
+                  styles.option,
+                  {
+                    backgroundColor:
+                      isSelected
+                        ? colors.primarySoft
+                        : colors.surface,
+                    borderColor:
+                      isSelected
+                        ? colors.primary
+                        : colors.border,
+                  },
+                ]}
+              >
+                <View
+                  style={[
+                    styles.optionCircle,
+                    {
+                      borderColor:
+                        isSelected
+                          ? colors.primary
+                          : colors.border,
+                      backgroundColor:
+                        isSelected
+                          ? colors.primary
+                          : "transparent",
+                    },
+                  ]}
+                >
+                  {isSelected && (
+                    <Ionicons
+                      name="checkmark"
+                      size={15}
+                      color="#fff"
+                    />
+                  )}
+                </View>
+
+                <Text
+                  style={[
+                    styles.optionText,
+                    { color: colors.text },
+                  ]}
+                >
+                  {option}
+                </Text>
+              </Pressable>
+            );
+          }
+        )}
+
+        {submitted && (
+          <View
+            style={[
+              styles.answerFeedback,
+              {
+                backgroundColor:
+                  colors.primarySoft,
+              },
+            ]}
+          >
+            <Text
+              style={[
+                styles.cardTitle,
+                { color: colors.primary },
+              ]}
+            >
+              Great! 🌟
+            </Text>
+
+            <Text
+              style={[
+                styles.courseMeta,
+                { color: colors.muted },
+              ]}
+            >
+              Your answer has been recorded for
+              this practice test.
+            </Text>
+          </View>
+        )}
+
+        <Pressable
+          onPress={submitAnswer}
+          style={[
+            styles.primaryButton,
+            {
+              backgroundColor:
+                colors.primary,
+            },
+          ]}
+        >
+          <Text
+            style={styles.primaryButtonText}
+          >
+            {submitted
+              ? "Answer Submitted"
+              : "Submit Answer"}
+          </Text>
+        </Pressable>
+      </View>
+
+      <View
+        style={[
+          styles.tipCard,
+          {
+            backgroundColor:
+              colors.surface,
+            borderColor:
+              colors.border,
+          },
+        ]}
+      >
+        <Text style={{ fontSize: 25 }}>
+          💡
+        </Text>
+
+        <Text
+          style={[
+            styles.courseMeta,
+            {
+              color: colors.muted,
+              flex: 1,
+            },
+          ]}
+        >
+          Don't worry about rank while learning.
+          Focus on understanding the concept.
+        </Text>
       </View>
     </ScrollView>
   );
 }
 
+/* =========================================================
+   PASSPORT SCREEN
+   ========================================================= */
+
 function PassportScreen({ colors }) {
   const badges = [
-    ["First Project", "rocket-outline"],
-    ["12 Lessons", "book-outline"],
-    ["Skill Builder", "hammer-outline"],
+    ["🔥", "7 Day Streak"],
+    ["🎬", "Creator"],
+    ["💻", "Coder"],
+    ["🧠", "Problem Solver"],
+    ["🏆", "Test Player"],
+    ["🚀", "Builder"],
   ];
 
   return (
@@ -469,247 +1898,602 @@ function PassportScreen({ colors }) {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.page}
     >
-      <Text style={[styles.eyebrow, { color: colors.muted }]}>
+      <Text
+        style={[
+          styles.eyebrow,
+          { color: colors.muted },
+        ]}
+      >
         SKILL PASSPORT
       </Text>
 
-      <Text style={[styles.heading, { color: colors.text }]}>
-        Your proof of progress.
+      <Text
+        style={[
+          styles.heading,
+          { color: colors.text },
+        ]}
+      >
+        Your proof of growth.
       </Text>
 
       <View
         style={[
           styles.passportCard,
-          { backgroundColor: colors.surface, borderColor: colors.border },
+          {
+            backgroundColor:
+              colors.surface,
+            borderColor:
+              colors.border,
+          },
         ]}
       >
-        <View style={styles.passportHeader}>
-          <View style={[styles.passportAvatar, { backgroundColor: colors.primary }]}>
-            <Text style={styles.passportAvatarText}>A</Text>
-          </View>
-
-          <View style={{ flex: 1 }}>
-            <Text style={[styles.passportName, { color: colors.text }]}>
-              SAATH Learner
-            </Text>
-            <Text style={[styles.courseMeta, { color: colors.muted }]}>
-              Skill Passport • Level 4
-            </Text>
-          </View>
-
-          <Ionicons name="shield-checkmark" size={25} color={colors.green} />
+        <View
+          style={[
+            styles.passportAvatar,
+            {
+              backgroundColor:
+                colors.primarySoft,
+            },
+          ]}
+        >
+          <Text style={{ fontSize: 38 }}>
+            🧑‍🎓
+          </Text>
         </View>
 
+        <Text
+          style={[
+            styles.passportName,
+            { color: colors.text },
+          ]}
+        >
+          Aaryan
+        </Text>
+
+        <Text
+          style={[
+            styles.courseMeta,
+            { color: colors.muted },
+          ]}
+        >
+          SAATH Student
+        </Text>
+
         <View style={styles.passportStats}>
-          <PassportStat value="3" label="Skills" colors={colors} />
-          <PassportStat value="4" label="Projects" colors={colors} />
-          <PassportStat value="12" label="Lessons" colors={colors} />
+          <View>
+            <Text
+              style={[
+                styles.passportStatNumber,
+                { color: colors.primary },
+              ]}
+            >
+              420
+            </Text>
+            <Text
+              style={[
+                styles.courseMeta,
+                { color: colors.muted },
+              ]}
+            >
+              XP
+            </Text>
+          </View>
+
+          <View>
+            <Text
+              style={[
+                styles.passportStatNumber,
+                { color: colors.primary },
+              ]}
+            >
+              12
+            </Text>
+            <Text
+              style={[
+                styles.courseMeta,
+                { color: colors.muted },
+              ]}
+            >
+              Lessons
+            </Text>
+          </View>
+
+          <View>
+            <Text
+              style={[
+                styles.passportStatNumber,
+                { color: colors.primary },
+              ]}
+            >
+              4
+            </Text>
+            <Text
+              style={[
+                styles.courseMeta,
+                { color: colors.muted },
+              ]}
+            >
+              Badges
+            </Text>
+          </View>
         </View>
       </View>
 
-      <SectionTitle title="Verified progress" colors={colors} />
-
-      {["Video Editing", "Graphic Design", "Coding"].map((skill, i) => {
-        const values = [68, 35, 20];
-
-        return (
-          <View
-            key={skill}
-            style={[
-              styles.progressRow,
-              { backgroundColor: colors.surface, borderColor: colors.border },
-            ]}
-          >
-            <View style={{ flex: 1 }}>
-              <Text style={[styles.cardTitle, { color: colors.text }]}>
-                {skill}
-              </Text>
-              <ProgressBar value={values[i]} colors={colors} />
-            </View>
-            <Text style={[styles.percent, { color: colors.primary }]}>
-              {values[i]}%
-            </Text>
-          </View>
-        );
-      })}
-
-      <SectionTitle title="Badges" colors={colors} />
+      <SectionTitle
+        title="Achievements"
+        colors={colors}
+      />
 
       <View style={styles.badgeGrid}>
-        {badges.map(([title, icon]) => (
-          <View
-            key={title}
+        {badges.map(
+          ([emoji, title]) => (
+            <View
+              key={title}
+              style={[
+                styles.badgeCard,
+                {
+                  backgroundColor:
+                    colors.surface,
+                  borderColor:
+                    colors.border,
+                },
+              ]}
+            >
+              <Text
+                style={styles.badgeEmoji}
+              >
+                {emoji}
+              </Text>
+
+              <Text
+                style={[
+                  styles.badgeTitle,
+                  { color: colors.text },
+                ]}
+              >
+                {title}
+              </Text>
+            </View>
+          )
+        )}
+      </View>
+
+      <View
+        style={[
+          styles.proofCard,
+          {
+            backgroundColor:
+              colors.primarySoft,
+            borderColor:
+              colors.primary,
+          },
+        ]}
+      >
+        <Text style={{ fontSize: 28 }}>
+          📜
+        </Text>
+
+        <View style={{ flex: 1 }}>
+          <Text
             style={[
-              styles.badge,
-              { backgroundColor: colors.surface, borderColor: colors.border },
+              styles.cardTitle,
+              { color: colors.text },
             ]}
           >
-            <Ionicons name={icon} size={25} color={colors.primary} />
-            <Text style={[styles.badgeText, { color: colors.text }]}>
-              {title}
-            </Text>
-          </View>
-        ))}
+            Build your proof
+          </Text>
+
+          <Text
+            style={[
+              styles.courseMeta,
+              { color: colors.muted },
+            ]}
+          >
+            Projects, skills, missions and
+            achievements will appear here.
+          </Text>
+        </View>
       </View>
     </ScrollView>
   );
 }
 
-function PassportStat({ value, label, colors }) {
-  return (
-    <View style={{ alignItems: "center", flex: 1 }}>
-      <Text style={[styles.statValue, { color: colors.text }]}>{value}</Text>
-      <Text style={[styles.statLabel, { color: colors.muted }]}>{label}</Text>
-    </View>
-  );
-}
+/* =========================================================
+   PROFILE SCREEN
+   ========================================================= */
 
-function ProfileScreen({ colors, darkMode, setDarkMode }) {
-  const [modal, setModal] = useState(false);
-  const [name, setName] = useState("SAATH Learner");
+function ProfileScreen({
+  colors,
+  darkMode,
+  setDarkMode,
+}) {
+  const [name, setName] =
+    useState("Aaryan");
+
+  const [modalVisible, setModalVisible] =
+    useState(false);
+
+  const [draftName, setDraftName] =
+    useState(name);
+
+  function saveName() {
+    const cleaned =
+      draftName.trim();
+
+    if (!cleaned) {
+      Alert.alert(
+        "Name required",
+        "Please enter your name."
+      );
+      return;
+    }
+
+    setName(cleaned);
+    setModalVisible(false);
+  }
 
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.page}
     >
-      <Text style={[styles.eyebrow, { color: colors.muted }]}>PROFILE</Text>
-      <Text style={[styles.heading, { color: colors.text }]}>
-        Your SAATH account.
+      <Text
+        style={[
+          styles.eyebrow,
+          { color: colors.muted },
+        ]}
+      >
+        PROFILE
       </Text>
+
+      <Text
+        style={[
+          styles.heading,
+          { color: colors.text },
+        ]}
+      >
+        Your SAATH profile
+      </Text>
+
+      {/* PROFILE CARD */}
 
       <View
         style={[
           styles.profileCard,
-          { backgroundColor: colors.surface, borderColor: colors.border },
+          {
+            backgroundColor:
+              colors.surface,
+            borderColor:
+              colors.border,
+          },
         ]}
       >
-        <View style={[styles.bigAvatar, { backgroundColor: colors.primarySoft }]}>
-          <Text style={[styles.bigAvatarText, { color: colors.primary }]}>
-            {name.charAt(0).toUpperCase()}
+        <View
+          style={[
+            styles.profileAvatar,
+            {
+              backgroundColor:
+                colors.primarySoft,
+            },
+          ]}
+        >
+          <Text style={{ fontSize: 35 }}>
+            🧑‍🎓
           </Text>
         </View>
 
-        <Text style={[styles.profileName, { color: colors.text }]}>{name}</Text>
-        <Text style={[styles.courseMeta, { color: colors.muted }]}>
-          SAATH ID • SAATH-0001
-        </Text>
+        <View style={{ flex: 1 }}>
+          <Text
+            style={[
+              styles.profileName,
+              { color: colors.text },
+            ]}
+          >
+            {name}
+          </Text>
+
+          <Text
+            style={[
+              styles.courseMeta,
+              { color: colors.muted },
+            ]}
+          >
+            Student • Class 10
+          </Text>
+        </View>
 
         <Pressable
-          style={[styles.outlineButton, { borderColor: colors.border }]}
-          onPress={() => setModal(true)}
+          onPress={() => {
+            setDraftName(name);
+            setModalVisible(true);
+          }}
         >
-          <Text style={{ color: colors.text, fontWeight: "700" }}>
-            Edit Profile
-          </Text>
+          <Ionicons
+            name="create-outline"
+            size={23}
+            color={colors.primary}
+          />
         </Pressable>
       </View>
 
-      <SectionTitle title="Account & preferences" colors={colors} />
+      {/* PERSONALIZATION */}
 
-      <SettingRow
-        icon="moon-outline"
-        title="Dark mode"
-        subtitle="Change app appearance"
+      <SectionTitle
+        title="Learning profile"
         colors={colors}
-        right={
-          <Pressable
-            onPress={() => setDarkMode(!darkMode)}
-            style={[
-              styles.toggle,
-              { backgroundColor: darkMode ? colors.primary : colors.surface2 },
-            ]}
-          >
-            <View
-              style={[
-                styles.toggleKnob,
-                { alignSelf: darkMode ? "flex-end" : "flex-start" },
-              ]}
-            />
-          </Pressable>
-        }
       />
 
-      <SettingRow
-        icon="shield-checkmark-outline"
-        title="Safety & Privacy"
-        subtitle="Control your account safety"
+      <ProfileOption
+        icon="school-outline"
+        title="Class & Board"
+        subtitle="Class 10 • Board to be selected"
         colors={colors}
         onPress={() =>
           Alert.alert(
-            "Safety & Privacy",
-            "Your future SAATH account will use secure authentication and privacy controls."
+            "Class & Board",
+            "Class and board selection will personalize your learning."
           )
         }
       />
 
-      <SettingRow
+      <ProfileOption
+        icon="book-outline"
+        title="Subjects"
+        subtitle="Choose the subjects you study"
+        colors={colors}
+        onPress={() =>
+          Alert.alert(
+            "Subjects",
+            "Subject selection will be available here."
+          )
+        }
+      />
+
+      <ProfileOption
+        icon="flag-outline"
+        title="Goals"
+        subtitle="Tell SAATH what you want to achieve"
+        colors={colors}
+        onPress={() =>
+          Alert.alert(
+            "Goals",
+            "Your goals will personalize recommendations."
+          )
+        }
+      />
+
+      <ProfileOption
+        icon="time-outline"
+        title="Daily study time"
+        subtitle="Set a realistic daily learning target"
+        colors={colors}
+        onPress={() =>
+          Alert.alert(
+            "Daily Study Time",
+            "You can choose your preferred study time."
+          )
+        }
+      />
+
+      {/* SETTINGS */}
+
+      <SectionTitle
+        title="Settings"
+        colors={colors}
+      />
+
+      <View
+        style={[
+          styles.settingRow,
+          {
+            backgroundColor:
+              colors.surface,
+            borderColor:
+              colors.border,
+          },
+        ]}
+      >
+        <View
+          style={[
+            styles.settingIcon,
+            {
+              backgroundColor:
+                colors.primarySoft,
+            },
+          ]}
+        >
+          <Ionicons
+            name={
+              darkMode
+                ? "moon"
+                : "sunny-outline"
+            }
+            size={20}
+            color={colors.primary}
+          />
+        </View>
+
+        <View style={{ flex: 1 }}>
+          <Text
+            style={[
+              styles.cardTitle,
+              { color: colors.text },
+            ]}
+          >
+            Dark mode
+          </Text>
+
+          <Text
+            style={[
+              styles.courseMeta,
+              { color: colors.muted },
+            ]}
+          >
+            {darkMode
+              ? "Enabled"
+              : "Disabled"}
+          </Text>
+        </View>
+
+        <Pressable
+          onPress={() =>
+            setDarkMode(!darkMode)
+          }
+          style={[
+            styles.toggle,
+            {
+              backgroundColor:
+                darkMode
+                  ? colors.primary
+                  : colors.surface2,
+            },
+          ]}
+        >
+          <View
+            style={[
+              styles.toggleCircle,
+              {
+                transform: [
+                  {
+                    translateX:
+                      darkMode
+                        ? 18
+                        : 0,
+                  },
+                ],
+              },
+            ]}
+          />
+        </Pressable>
+      </View>
+
+      <ProfileOption
+        icon="shield-checkmark-outline"
+        title="Safety & Privacy"
+        subtitle="Learn how SAATH protects your data"
+        colors={colors}
+        onPress={() =>
+          Alert.alert(
+            "Safety & Privacy",
+            "SAATH should collect only the information needed for learning and protect student data with proper security rules."
+          )
+        }
+      />
+
+      <ProfileOption
         icon="notifications-outline"
         title="Notifications"
-        subtitle="Manage learning reminders"
+        subtitle="Learning reminders and updates"
         colors={colors}
-        onPress={() => Alert.alert("Notifications", "Notification settings coming with the backend.")}
+        onPress={() =>
+          Alert.alert(
+            "Notifications",
+            "Notification preferences will be available here."
+          )
+        }
       />
 
-      <SettingRow
-        icon="help-circle-outline"
-        title="Help & Support"
-        subtitle="Get help with SAATH"
-        colors={colors}
-        onPress={() => Alert.alert("SAATH Support", "Support section will be connected in the next build.")}
-      />
+      {/* EDIT MODAL */}
 
-      <View style={{ height: 20 }} />
-
-      <Text style={[styles.version, { color: colors.muted }]}>
-        SAATH V3 • Learn • Build • Prove • Grow
-      </Text>
-
-      <Modal visible={modal} transparent animationType="fade">
+      <Modal
+        visible={modalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() =>
+          setModalVisible(false)
+        }
+      >
         <View style={styles.modalBackdrop}>
           <View
             style={[
               styles.modalCard,
-              { backgroundColor: colors.surface },
+              {
+                backgroundColor:
+                  colors.surface,
+              },
             ]}
           >
-            <Text style={[styles.modalTitle, { color: colors.text }]}>
+            <Text
+              style={[
+                styles.modalTitle,
+                { color: colors.text },
+              ]}
+            >
               Edit profile
             </Text>
 
+            <Text
+              style={[
+                styles.courseMeta,
+                { color: colors.muted },
+              ]}
+            >
+              Your display name
+            </Text>
+
             <TextInput
-              value={name}
-              onChangeText={setName}
-              placeholder="Your name"
-              placeholderTextColor={colors.muted}
+              value={draftName}
+              onChangeText={setDraftName}
+              placeholder="Enter name"
+              placeholderTextColor={
+                colors.muted
+              }
               style={[
                 styles.input,
                 {
                   color: colors.text,
-                  borderColor: colors.border,
-                  backgroundColor: colors.surface2,
+                  borderColor:
+                    colors.border,
+                  backgroundColor:
+                    colors.surface2,
                 },
               ]}
             />
 
-            <View style={styles.modalButtons}>
+            <View
+              style={styles.modalButtons}
+            >
               <Pressable
-                onPress={() => setModal(false)}
-                style={[styles.outlineButton, { borderColor: colors.border, flex: 1 }]}
+                onPress={() =>
+                  setModalVisible(false)
+                }
+                style={[
+                  styles.secondaryButton,
+                  {
+                    borderColor:
+                      colors.border,
+                  },
+                ]}
               >
-                <Text style={{ color: colors.text, fontWeight: "700" }}>
+                <Text
+                  style={[
+                    styles.secondaryText,
+                    { color: colors.text },
+                  ]}
+                >
                   Cancel
                 </Text>
               </Pressable>
 
               <Pressable
-                onPress={() => setModal(false)}
+                onPress={saveName}
                 style={[
                   styles.primaryButton,
-                  { backgroundColor: colors.primary, flex: 1 },
+                  {
+                    flex: 1,
+                    marginTop: 0,
+                    backgroundColor:
+                      colors.primary,
+                  },
                 ]}
               >
-                <Text style={styles.primaryButtonText}>Save</Text>
+                <Text
+                  style={
+                    styles.primaryButtonText
+                  }
+                >
+                  Save
+                </Text>
               </Pressable>
             </View>
           </View>
@@ -719,249 +2503,600 @@ function ProfileScreen({ colors, darkMode, setDarkMode }) {
   );
 }
 
-function SettingRow({ icon, title, subtitle, right, colors, onPress }) {
+/* =========================================================
+   PROFILE OPTION COMPONENT
+   ========================================================= */
+
+function ProfileOption({
+  icon,
+  title,
+  subtitle,
+  colors,
+  onPress,
+}) {
   return (
     <Pressable
       onPress={onPress}
       style={[
-        styles.settingRow,
-        { backgroundColor: colors.surface, borderColor: colors.border },
+        styles.profileOption,
+        {
+          backgroundColor:
+            colors.surface,
+          borderColor:
+            colors.border,
+        },
       ]}
     >
-      <View style={[styles.settingIcon, { backgroundColor: colors.primarySoft }]}>
-        <Ionicons name={icon} size={20} color={colors.primary} />
+      <View
+        style={[
+          styles.settingIcon,
+          {
+            backgroundColor:
+              colors.primarySoft,
+          },
+        ]}
+      >
+        <Ionicons
+          name={icon}
+          size={20}
+          color={colors.primary}
+        />
       </View>
 
       <View style={{ flex: 1 }}>
-        <Text style={[styles.cardTitle, { color: colors.text }]}>{title}</Text>
-        <Text style={[styles.courseMeta, { color: colors.muted }]}>
+        <Text
+          style={[
+            styles.cardTitle,
+            { color: colors.text },
+          ]}
+        >
+          {title}
+        </Text>
+
+        <Text
+          style={[
+            styles.courseMeta,
+            { color: colors.muted },
+          ]}
+        >
           {subtitle}
         </Text>
       </View>
 
-      {right || <Ionicons name="chevron-forward" size={19} color={colors.muted} />}
+      <Ionicons
+        name="chevron-forward"
+        size={20}
+        color={colors.muted}
+      />
     </Pressable>
   );
 }
 
+/* =========================================================
+   END OF PART 2
+   ========================================================= *//* =========================================================
+   SAATH AI SCREEN
+   ========================================================= */
+
 function AIScreen({ colors }) {
-  const [input, setInput] = useState("");
-  const [messages, setMessages] = useState([
-    {
-      from: "ai",
-      text: "Hi! I'm SAATH AI. Ask me about studies, skills, coding, editing, business ideas or planning.",
-    },
-  ]);
+  const [message, setMessage] =
+    useState("");
 
-  const send = () => {
-    const text = input.trim();
-
-    if (!text) return;
-
-    setMessages((prev) => [
-      ...prev,
-      { from: "user", text },
+  const [messages, setMessages] =
+    useState([
       {
-        from: "ai",
+        id: 1,
+        role: "ai",
         text:
-          "I received your question. The SAATH AI interface is ready, but real AI responses will be connected through a secure backend in the next step.",
+          "Hi! I'm SAATH AI 👋\n\nAsk me about your studies, concepts, projects, coding or any skill you're learning.",
       },
     ]);
 
-    setInput("");
-  };
+  function sendMessage() {
+    const cleaned = message.trim();
+
+    if (!cleaned) return;
+
+    const userMessage = {
+      id: Date.now(),
+      role: "user",
+      text: cleaned,
+    };
+
+    setMessages((old) => [
+      ...old,
+      userMessage,
+    ]);
+
+    setMessage("");
+
+    /*
+      IMPORTANT:
+      This is only the UI layer.
+
+      Production SAATH AI should call a secure
+      backend API. Never put a private AI API key
+      directly inside the Android app.
+    */
+
+    setTimeout(() => {
+      setMessages((old) => [
+        ...old,
+        {
+          id: Date.now() + 1,
+          role: "ai",
+          text:
+            "Good question! 🤔\n\nSAATH AI's secure backend will answer this with explanations, examples and practice questions.",
+        },
+      ]);
+    }, 500);
+  }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }}>
-      <StatusBar barStyle={colors === COLORS.dark ? "light-content" : "dark-content"} />
+    <SafeAreaView
+      style={[
+        styles.aiContainer,
+        { backgroundColor: colors.bg },
+      ]}
+    >
+      {/* HEADER */}
 
       <View
         style={[
           styles.aiHeader,
-          { backgroundColor: colors.surface, borderBottomColor: colors.border },
+          {
+            backgroundColor:
+              colors.surface,
+            borderBottomColor:
+              colors.border,
+          },
         ]}
       >
-        <View style={[styles.aiLogo, { backgroundColor: colors.primarySoft }]}>
-          <Ionicons name="sparkles" size={20} color={colors.primary} />
-        </View>
-
-        <View style={{ flex: 1 }}>
-          <Text style={[styles.aiTitle, { color: colors.text }]}>SAATH AI</Text>
-          <Text style={[styles.courseMeta, { color: colors.muted }]}>
-            Learn • Think • Build
+        <View
+          style={[
+            styles.aiLogo,
+            {
+              backgroundColor:
+                colors.primarySoft,
+            },
+          ]}
+        >
+          <Text style={{ fontSize: 22 }}>
+            ✨
           </Text>
         </View>
 
-        <View style={[styles.onlineDot, { backgroundColor: colors.green }]} />
+        <View style={{ flex: 1 }}>
+          <Text
+            style={[
+              styles.aiTitle,
+              { color: colors.text },
+            ]}
+          >
+            SAATH AI
+          </Text>
+
+          <Text
+            style={[
+              styles.aiStatus,
+              { color: colors.green },
+            ]}
+          >
+            ● Learning assistant
+          </Text>
+        </View>
+
+        <Ionicons
+          name="shield-checkmark"
+          size={21}
+          color={colors.green}
+        />
       </View>
 
+      {/* CHAT */}
+
       <ScrollView
-        contentContainerStyle={styles.chatArea}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={
+          styles.chatContent
+        }
       >
-        {messages.map((message, index) => (
-          <View
-            key={index}
-            style={[
-              styles.message,
-              message.from === "user"
-                ? [
-                    styles.userMessage,
-                    { backgroundColor: colors.primary },
-                  ]
-                : [
-                    styles.aiMessage,
+        <View
+          style={[
+            styles.aiWelcome,
+            {
+              backgroundColor:
+                colors.primarySoft,
+            },
+          ]}
+        >
+          <Text style={{ fontSize: 25 }}>
+            🧠
+          </Text>
+
+          <View style={{ flex: 1 }}>
+            <Text
+              style={[
+                styles.cardTitle,
+                { color: colors.text },
+              ]}
+            >
+              Learn, don't just copy.
+            </Text>
+
+            <Text
+              style={[
+                styles.courseMeta,
+                { color: colors.muted },
+              ]}
+            >
+              Ask SAATH AI to explain concepts,
+              give examples or create practice
+              questions.
+            </Text>
+          </View>
+        </View>
+
+        {messages.map((item) => {
+          const isUser =
+            item.role === "user";
+
+          return (
+            <View
+              key={item.id}
+              style={[
+                styles.messageRow,
+                isUser &&
+                  styles.messageRowUser,
+              ]}
+            >
+              {!isUser && (
+                <View
+                  style={[
+                    styles.messageAvatar,
                     {
-                      backgroundColor: colors.surface,
-                      borderColor: colors.border,
+                      backgroundColor:
+                        colors.primarySoft,
                     },
-                  ],
+                  ]}
+                >
+                  <Text>✨</Text>
+                </View>
+              )}
+
+              <View
+                style={[
+                  styles.messageBubble,
+                  {
+                    backgroundColor: isUser
+                      ? colors.primary
+                      : colors.surface,
+                    borderColor:
+                      colors.border,
+                  },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.messageText,
+                    {
+                      color: isUser
+                        ? "#FFFFFF"
+                        : colors.text,
+                    },
+                  ]}
+                >
+                  {item.text}
+                </Text>
+              </View>
+            </View>
+          );
+        })}
+      </ScrollView>
+
+      {/* SUGGESTIONS */}
+
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={
+          styles.suggestionRow
+        }
+      >
+        {[
+          "Explain a concept",
+          "Give me a quiz",
+          "Help with coding",
+          "Make a study plan",
+        ].map((suggestion) => (
+          <Pressable
+            key={suggestion}
+            onPress={() =>
+              setMessage(suggestion)
+            }
+            style={[
+              styles.suggestionChip,
+              {
+                backgroundColor:
+                  colors.surface,
+                borderColor:
+                  colors.border,
+              },
             ]}
           >
             <Text
-              style={{
-                color: message.from === "user" ? "#fff" : colors.text,
-                lineHeight: 21,
-              }}
+              style={[
+                styles.suggestionText,
+                { color: colors.text },
+              ]}
             >
-              {message.text}
+              {suggestion}
             </Text>
-          </View>
+          </Pressable>
         ))}
       </ScrollView>
 
+      {/* INPUT */}
+
       <View
         style={[
-          styles.aiInputArea,
-          { backgroundColor: colors.surface, borderTopColor: colors.border },
+          styles.chatInputRow,
+          {
+            backgroundColor:
+              colors.surface,
+            borderTopColor:
+              colors.border,
+          },
         ]}
       >
-        <View style={styles.aiModes}>
-          {["Study", "Coding", "Creator", "Business"].map((mode) => (
-            <Pressable
-              key={mode}
-              onPress={() =>
-                setInput(`Help me with ${mode.toLowerCase()}`)
-              }
-              style={[
-                styles.modeChip,
-                {
-                  backgroundColor: colors.surface2,
-                  borderColor: colors.border,
-                },
-              ]}
-            >
-              <Text style={{ color: colors.text, fontSize: 12, fontWeight: "600" }}>
-                {mode}
-              </Text>
-            </Pressable>
-          ))}
-        </View>
+        <TextInput
+          value={message}
+          onChangeText={setMessage}
+          placeholder="Ask SAATH anything..."
+          placeholderTextColor={
+            colors.muted
+          }
+          multiline
+          style={[
+            styles.chatInput,
+            {
+              color: colors.text,
+              backgroundColor:
+                colors.surface2,
+            },
+          ]}
+        />
 
-        <View style={styles.inputRow}>
-          <TextInput
-            value={input}
-            onChangeText={setInput}
-            onSubmitEditing={send}
-            placeholder="Ask SAATH AI..."
-            placeholderTextColor={colors.muted}
-            style={[
-              styles.aiInput,
-              {
-                backgroundColor: colors.surface2,
-                color: colors.text,
-                borderColor: colors.border,
-              },
-            ]}
+        <Pressable
+          onPress={sendMessage}
+          style={[
+            styles.sendButton,
+            {
+              backgroundColor:
+                colors.primary,
+            },
+          ]}
+        >
+          <Ionicons
+            name="arrow-up"
+            size={21}
+            color="#FFFFFF"
           />
-
-          <Pressable
-            onPress={send}
-            style={[styles.sendButton, { backgroundColor: colors.primary }]}
-          >
-            <Ionicons name="arrow-up" size={20} color="#fff" />
-          </Pressable>
-        </View>
+        </Pressable>
       </View>
     </SafeAreaView>
   );
 }
 
-function AppTabs({ darkMode, setDarkMode }) {
-  const colors = darkMode ? COLORS.dark : COLORS.light;
+/* =========================================================
+   APP NAVIGATION
+   ========================================================= */
+
+export default function App() {
+  const [darkMode, setDarkMode] =
+    useState(false);
+
+  const colors = darkMode
+    ? COLORS.dark
+    : COLORS.light;
+
+  const navigationTheme = darkMode
+    ? {
+        ...DarkTheme,
+        colors: {
+          ...DarkTheme.colors,
+          background: colors.bg,
+          card: colors.surface,
+          text: colors.text,
+          border: colors.border,
+          primary: colors.primary,
+        },
+      }
+    : {
+        ...DefaultTheme,
+        colors: {
+          ...DefaultTheme.colors,
+          background: colors.bg,
+          card: colors.surface,
+          text: colors.text,
+          border: colors.border,
+          primary: colors.primary,
+        },
+      };
 
   return (
     <NavigationContainer
-      theme={darkMode ? DarkTheme : DefaultTheme}
+      theme={navigationTheme}
     >
+      <StatusBar
+        barStyle={
+          darkMode
+            ? "light-content"
+            : "dark-content"
+        }
+      />
+
       <Tab.Navigator
-        screenOptions={{
+        initialRouteName="Home"
+        screenOptions={({ route }) => ({
           headerShown: false,
-          tabBarActiveTintColor: colors.primary,
-          tabBarInactiveTintColor: colors.muted,
+
+          tabBarActiveTintColor:
+            colors.primary,
+
+          tabBarInactiveTintColor:
+            colors.muted,
+
           tabBarStyle: {
-            height: 66,
-            paddingTop: 7,
+            backgroundColor:
+              colors.surface,
+            borderTopColor:
+              colors.border,
+            height: 68,
             paddingBottom: 8,
-            backgroundColor: colors.surface,
-            borderTopColor: colors.border,
+            paddingTop: 6,
           },
+
           tabBarLabelStyle: {
             fontSize: 11,
             fontWeight: "600",
           },
-        }}
+
+          tabBarIcon: ({
+            color,
+            focused,
+            size,
+          }) => {
+            let iconName = "home-outline";
+
+            if (route.name === "Home") {
+              iconName = focused
+                ? "home"
+                : "home-outline";
+            }
+
+            if (route.name === "Learn") {
+              iconName = focused
+                ? "book"
+                : "book-outline";
+            }
+
+            if (route.name === "Skills") {
+              iconName = focused
+                ? "rocket"
+                : "rocket-outline";
+            }
+
+            if (
+              route.name === "Leaderboard"
+            ) {
+              iconName = focused
+                ? "trophy"
+                : "trophy-outline";
+            }
+
+            if (route.name === "Passport") {
+              iconName = focused
+                ? "ribbon"
+                : "ribbon-outline";
+            }
+
+            if (route.name === "Profile") {
+              iconName = focused
+                ? "person"
+                : "person-outline";
+            }
+
+            if (route.name === "AI") {
+              iconName = focused
+                ? "sparkles"
+                : "sparkles-outline";
+            }
+
+            return (
+              <Ionicons
+                name={iconName}
+                size={size}
+                color={color}
+              />
+            );
+          },
+        })}
       >
         <Tab.Screen
           name="Home"
           options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="home-outline" color={color} size={size} />
-            ),
+            title: "Home",
           }}
         >
-          {(props) => <HomeScreen {...props} colors={colors} />}
+          {(props) => (
+            <HomeScreen
+              {...props}
+              colors={colors}
+            />
+          )}
         </Tab.Screen>
 
         <Tab.Screen
           name="Learn"
           options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="book-outline" color={color} size={size} />
-            ),
+            title: "Learn",
           }}
         >
-          {(props) => <LearnScreen {...props} colors={colors} />}
+          {(props) => (
+            <LearnScreen
+              {...props}
+              colors={colors}
+            />
+          )}
         </Tab.Screen>
 
         <Tab.Screen
           name="Skills"
           options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="layers-outline" color={color} size={size} />
-            ),
+            title: "Skills",
           }}
         >
-          {(props) => <SkillsScreen {...props} colors={colors} />}
+          {(props) => (
+            <SkillsScreen
+              {...props}
+              colors={colors}
+            />
+          )}
+        </Tab.Screen>
+
+        <Tab.Screen
+          name="Leaderboard"
+          options={{
+            title: "Top 10",
+          }}
+        >
+          {(props) => (
+            <LeaderboardScreen
+              {...props}
+              colors={colors}
+            />
+          )}
         </Tab.Screen>
 
         <Tab.Screen
           name="Passport"
           options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="ribbon-outline" color={color} size={size} />
-            ),
+            title: "Passport",
           }}
         >
-          {(props) => <PassportScreen {...props} colors={colors} />}
+          {(props) => (
+            <PassportScreen
+              {...props}
+              colors={colors}
+            />
+          )}
         </Tab.Screen>
 
         <Tab.Screen
           name="Profile"
           options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="person-outline" color={color} size={size} />
-            ),
+            title: "Profile",
           }}
         >
           {(props) => (
@@ -977,126 +3112,236 @@ function AppTabs({ darkMode, setDarkMode }) {
         <Tab.Screen
           name="AI"
           options={{
+            title: "SAATH AI",
             tabBarButton: () => null,
           }}
         >
-          {(props) => <AIScreen {...props} colors={colors} />}
+          {(props) => (
+            <AIScreen
+              {...props}
+              colors={colors}
+            />
+          )}
+        </Tab.Screen>
+
+        <Tab.Screen
+          name="Test"
+          options={{
+            title: "Sunday Test",
+            tabBarButton: () => null,
+          }}
+        >
+          {(props) => (
+            <TestScreen
+              {...props}
+              colors={colors}
+            />
+          )}
         </Tab.Screen>
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
 
-export default function App() {
-  const [darkMode, setDarkMode] = useState(true);
-
-  const colors = useMemo(
-    () => (darkMode ? COLORS.dark : COLORS.light),
-    [darkMode]
-  );
-
-  return (
-    <View style={{ flex: 1, backgroundColor: colors.bg }}>
-      <AppTabs darkMode={darkMode} setDarkMode={setDarkMode} />
-    </View>
-  );
-}
+/* =========================================================
+   STYLES
+   ========================================================= */
 
 const styles = StyleSheet.create({
   page: {
-    padding: 20,
-    paddingTop: 18,
+    padding: 18,
     paddingBottom: 35,
   },
 
   topRow: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
     marginBottom: 22,
   },
 
   eyebrow: {
     fontSize: 11,
     fontWeight: "800",
-    letterSpacing: 1.4,
-    marginBottom: 7,
+    letterSpacing: 1.2,
+    marginBottom: 5,
   },
 
   heading: {
     fontSize: 29,
     fontWeight: "800",
-    letterSpacing: -0.8,
+    letterSpacing: -0.7,
   },
 
-  avatar: {
-    width: 45,
-    height: 45,
-    borderRadius: 23,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  avatarText: {
-    fontSize: 18,
-    fontWeight: "800",
-  },
-
-  hero: {
-    borderWidth: 1,
-    borderRadius: 24,
-    padding: 21,
-    marginBottom: 27,
-  },
-
-  heroBadge: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 15,
-  },
-
-  heroBadgeText: {
-    marginLeft: 7,
-    fontSize: 11,
-    fontWeight: "800",
-    letterSpacing: 0.9,
-  },
-
-  heroTitle: {
-    fontSize: 23,
-    lineHeight: 29,
-    fontWeight: "800",
-    marginBottom: 9,
+  subtitle: {
+    fontSize: 14,
+    marginTop: 5,
   },
 
   body: {
     fontSize: 14,
     lineHeight: 21,
+    marginTop: 7,
+  },
+
+  avatar: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  avatarText: {
+    fontSize: 19,
+    fontWeight: "800",
+  },
+
+  /* STREAK */
+
+  streakCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 15,
+    borderWidth: 1,
+    borderRadius: 18,
+    marginBottom: 14,
+  },
+
+  streakIcon: {
+    width: 47,
+    height: 47,
+    borderRadius: 15,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 12,
+  },
+
+  cardTitle: {
+    fontSize: 15,
+    fontWeight: "750",
+  },
+
+  courseMeta: {
+    fontSize: 12,
+    lineHeight: 18,
+    marginTop: 3,
+  },
+
+  xpText: {
+    fontSize: 12,
+    fontWeight: "800",
+  },
+
+  /* TEST BANNER */
+
+  testBanner: {
+    padding: 18,
+    borderRadius: 22,
+    borderWidth: 1,
+    marginBottom: 15,
+  },
+
+  testBannerTop: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+
+  testBadge: {
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 9,
+    paddingVertical: 5,
+    borderRadius: 8,
+  },
+
+  testBadgeText: {
+    fontSize: 9,
+    fontWeight: "900",
+    color: "#635BFF",
+  },
+
+  liveText: {
+    fontSize: 10,
+    fontWeight: "800",
+  },
+
+  testTitle: {
+    fontSize: 21,
+    fontWeight: "800",
+    marginTop: 14,
+  },
+
+  testDescription: {
+    fontSize: 13,
+    lineHeight: 19,
+    marginTop: 6,
+  },
+
+  testBottom: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 14,
+  },
+
+  testReward: {
+    fontSize: 12,
+    fontWeight: "700",
+  },
+
+  /* HERO */
+
+  hero: {
+    padding: 19,
+    borderRadius: 22,
+    borderWidth: 1,
+    marginBottom: 23,
+  },
+
+  heroBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+
+  heroBadgeText: {
+    fontSize: 10,
+    fontWeight: "900",
+    letterSpacing: 0.8,
+  },
+
+  heroTitle: {
+    fontSize: 21,
+    fontWeight: "800",
+    marginTop: 12,
+    lineHeight: 27,
   },
 
   primaryButton: {
     minHeight: 48,
-    paddingHorizontal: 17,
+    paddingHorizontal: 18,
     borderRadius: 14,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    marginTop: 18,
+    gap: 8,
+    marginTop: 16,
   },
 
   primaryButtonText: {
-    color: "#fff",
+    color: "#FFFFFF",
     fontSize: 14,
     fontWeight: "800",
-    marginRight: 8,
   },
+
+  /* SECTION */
 
   sectionHeader: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginTop: 8,
-    marginBottom: 13,
+    marginTop: 7,
+    marginBottom: 12,
   },
 
   sectionTitle: {
@@ -1105,336 +3350,624 @@ const styles = StyleSheet.create({
   },
 
   actionText: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: "700",
   },
+
+  /* STATS */
 
   statsRow: {
     flexDirection: "row",
     gap: 10,
-    marginBottom: 25,
+    marginBottom: 22,
   },
 
   statBox: {
     flex: 1,
+    paddingVertical: 15,
+    paddingHorizontal: 8,
     borderWidth: 1,
     borderRadius: 17,
-    paddingVertical: 17,
     alignItems: "center",
   },
 
   statValue: {
     fontSize: 22,
-    fontWeight: "800",
+    fontWeight: "850",
   },
 
   statLabel: {
-    fontSize: 12,
+    fontSize: 10,
+    marginTop: 4,
+  },
+
+  /* LEARNING IMAGE */
+
+  learningHero: {
+    height: 190,
+    borderRadius: 22,
+    overflow: "hidden",
+    borderWidth: 1,
+    marginBottom: 22,
+  },
+
+  learningImage: {
+    width: "100%",
+    height: "100%",
+  },
+
+  learningOverlay: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    padding: 16,
+    paddingTop: 45,
+    backgroundColor:
+      "rgba(0,0,0,0.52)",
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "space-between",
+  },
+
+  imageLabel: {
+    color: "#FFFFFF",
+    fontSize: 9,
+    fontWeight: "900",
+    letterSpacing: 1,
+  },
+
+  imageTitle: {
+    color: "#FFFFFF",
+    fontSize: 21,
+    fontWeight: "800",
     marginTop: 3,
   },
 
-  courseRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderWidth: 1,
-    borderRadius: 19,
-    padding: 15,
-    marginBottom: 24,
-    gap: 12,
+  imageSubtitle: {
+    color: "#FFFFFF",
+    fontSize: 11,
+    marginTop: 2,
   },
 
-  courseIcon: {
-    width: 47,
-    height: 47,
-    borderRadius: 14,
+  playCircle: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor:
+      "rgba(99,91,255,0.95)",
     alignItems: "center",
     justifyContent: "center",
   },
 
-  courseTitle: {
-    fontSize: 15,
-    fontWeight: "800",
-  },
-
-  courseMeta: {
-    fontSize: 12,
-    marginTop: 4,
-  },
-
-  progressTrack: {
-    height: 6,
-    borderRadius: 10,
-    overflow: "hidden",
-    marginTop: 9,
-  },
-
-  progressFill: {
-    height: "100%",
-    borderRadius: 10,
-  },
-
-  percent: {
-    fontSize: 12,
-    fontWeight: "800",
-  },
+  /* QUICK ACCESS */
 
   quickGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 10,
+    marginBottom: 20,
   },
 
   quickCard: {
     width: "48%",
-    borderWidth: 1,
+    minHeight: 120,
     borderRadius: 18,
-    padding: 16,
-    minHeight: 112,
+    borderWidth: 1,
+    padding: 13,
+  },
+
+  quickIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 13,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 9,
   },
 
   quickTitle: {
     fontSize: 14,
     fontWeight: "800",
-    marginTop: 13,
   },
 
   quickSubtitle: {
-    fontSize: 12,
-    marginTop: 4,
+    fontSize: 11,
+    marginTop: 3,
   },
 
-  searchFake: {
-    height: 50,
-    borderRadius: 15,
-    paddingHorizontal: 15,
+  /* COMMUNITY */
+
+  communityCard: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 20,
-    marginBottom: 20,
-    backgroundColor: "#151922",
+    padding: 15,
+    borderRadius: 18,
+    borderWidth: 1,
+    marginTop: 2,
+  },
+
+  communityEmoji: {
+    fontSize: 29,
+    marginRight: 12,
+  },
+
+  communityArrow: {
+    fontSize: 22,
+    fontWeight: "800",
+  },
+
+  /* LEARN */
+
+  boardCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 16,
+    borderRadius: 20,
+    borderWidth: 1,
+    marginTop: 18,
+    marginBottom: 22,
+  },
+
+  boardEmoji: {
+    fontSize: 30,
+    marginRight: 12,
   },
 
   learningCard: {
-    borderWidth: 1,
-    borderRadius: 19,
-    padding: 15,
     flexDirection: "row",
     alignItems: "center",
-    gap: 13,
-    marginBottom: 11,
+    padding: 14,
+    borderRadius: 18,
+    borderWidth: 1,
+    marginBottom: 10,
+    gap: 10,
   },
 
   learningIcon: {
-    width: 47,
-    height: 47,
-    borderRadius: 14,
+    width: 51,
+    height: 51,
+    borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
   },
 
-  cardTitle: {
-    fontSize: 15,
+  progressTrack: {
+    height: 6,
+    borderRadius: 4,
+    overflow: "hidden",
+    marginTop: 8,
+  },
+
+  progressFill: {
+    height: "100%",
+    borderRadius: 4,
+  },
+
+  percent: {
+    fontSize: 11,
     fontWeight: "800",
   },
 
-  skillCard: {
+  tipCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    padding: 15,
+    borderRadius: 18,
     borderWidth: 1,
-    borderRadius: 20,
-    padding: 16,
-    flexDirection: "row",
-    gap: 13,
-    marginBottom: 12,
-  },
-
-  skillIcon: {
-    width: 47,
-    height: 47,
-    borderRadius: 14,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  skillTop: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-
-  level: {
-    fontSize: 11,
-    fontWeight: "600",
-  },
-
-  smallButton: {
-    alignSelf: "flex-start",
-    paddingHorizontal: 13,
-    paddingVertical: 9,
-    borderRadius: 11,
-    marginTop: 12,
-  },
-
-  projectBanner: {
-    borderRadius: 19,
-    padding: 17,
     marginTop: 8,
-    flexDirection: "row",
-    alignItems: "center",
   },
 
-  passportCard: {
+  /* SKILLS */
+
+  skillHero: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 16,
+    borderRadius: 20,
     borderWidth: 1,
-    borderRadius: 23,
-    padding: 19,
-    marginTop: 17,
-    marginBottom: 25,
+    marginTop: 18,
+    marginBottom: 22,
   },
 
-  passportHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-
-  passportAvatar: {
-    width: 52,
-    height: 52,
-    borderRadius: 17,
-    alignItems: "center",
-    justifyContent: "center",
+  skillHeroEmoji: {
+    fontSize: 31,
     marginRight: 13,
   },
 
-  passportAvatarText: {
-    color: "#fff",
-    fontSize: 21,
+  skillCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 14,
+    borderRadius: 18,
+    borderWidth: 1,
+    marginBottom: 10,
+    gap: 11,
+  },
+
+  skillEmoji: {
+    width: 54,
+    height: 54,
+    borderRadius: 16,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  /* LEADERBOARD */
+
+  weekCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 16,
+    borderRadius: 20,
+    borderWidth: 1,
+    marginTop: 18,
+    marginBottom: 20,
+  },
+
+  daysCircle: {
+    width: 55,
+    height: 55,
+    borderRadius: 28,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFFFFF",
+  },
+
+  daysNumber: {
+    fontSize: 18,
     fontWeight: "900",
   },
 
-  passportName: {
-    fontSize: 16,
+  daysLabel: {
+    fontSize: 9,
+  },
+
+  podiumRow: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 7,
+    marginBottom: 22,
+  },
+
+  podiumCard: {
+    flex: 1,
+    alignItems: "center",
+    paddingVertical: 13,
+    paddingHorizontal: 4,
+    borderRadius: 17,
+    borderWidth: 1,
+  },
+
+  podiumMedal: {
+    fontSize: 20,
+  },
+
+  largeAvatar: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 5,
+  },
+
+  podiumName: {
+    fontSize: 12,
+    fontWeight: "800",
+    marginTop: 7,
+  },
+
+  podiumXP: {
+    fontSize: 10,
+    fontWeight: "800",
+    marginTop: 3,
+  },
+
+  rankRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 11,
+    borderRadius: 16,
+    borderWidth: 1,
+    marginBottom: 8,
+  },
+
+  rankNumber: {
+    width: 37,
+  },
+
+  rankText: {
+    fontSize: 11,
     fontWeight: "800",
   },
 
-  passportStats: {
-    flexDirection: "row",
-    marginTop: 24,
-    paddingTop: 18,
-    borderTopWidth: 1,
-    borderTopColor: "#292E38",
+  smallAvatar: {
+    width: 43,
+    height: 43,
+    borderRadius: 22,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 10,
   },
 
-  progressRow: {
-    borderWidth: 1,
-    borderRadius: 17,
-    padding: 15,
+  rankName: {
+    fontSize: 13,
+    fontWeight: "800",
+  },
+
+  rankCity: {
+    fontSize: 10,
+    marginTop: 2,
+  },
+
+  rankXP: {
+    fontSize: 11,
+    fontWeight: "900",
+  },
+
+  rewardCard: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 14,
-    marginBottom: 10,
+    gap: 13,
+    padding: 16,
+    borderRadius: 18,
+    borderWidth: 1,
+    marginTop: 12,
+  },
+
+  securityCard: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 10,
+    padding: 13,
+    borderRadius: 15,
+    marginTop: 10,
+  },
+
+  securityText: {
+    flex: 1,
+    fontSize: 10,
+    lineHeight: 15,
+  },
+
+  weekIdText: {
+    textAlign: "center",
+    fontSize: 9,
+    marginTop: 15,
+  },
+
+  /* TEST */
+
+  testInfoCard: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 15,
+    borderRadius: 18,
+    borderWidth: 1,
+    marginTop: 18,
+    marginBottom: 15,
+  },
+
+  infoItem: {
+    alignItems: "center",
+    gap: 5,
+  },
+
+  infoEmoji: {
+    fontSize: 21,
+  },
+
+  infoText: {
+    fontSize: 10,
+    fontWeight: "700",
+  },
+
+  questionCard: {
+    padding: 17,
+    borderRadius: 20,
+    borderWidth: 1,
+  },
+
+  questionNumber: {
+    fontSize: 10,
+    fontWeight: "900",
+    letterSpacing: 0.8,
+  },
+
+  question: {
+    fontSize: 19,
+    lineHeight: 26,
+    fontWeight: "800",
+    marginTop: 9,
+    marginBottom: 15,
+  },
+
+  option: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 13,
+    borderRadius: 14,
+    borderWidth: 1,
+    marginBottom: 9,
+  },
+
+  optionCircle: {
+    width: 25,
+    height: 25,
+    borderRadius: 13,
+    borderWidth: 1.5,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 10,
+  },
+
+  optionText: {
+    flex: 1,
+    fontSize: 13,
+    fontWeight: "600",
+  },
+
+  answerFeedback: {
+    padding: 13,
+    borderRadius: 13,
+    marginTop: 5,
+  },
+
+  /* PASSPORT */
+
+  passportCard: {
+    alignItems: "center",
+    padding: 22,
+    borderRadius: 23,
+    borderWidth: 1,
+    marginTop: 18,
+  },
+
+  passportAvatar: {
+    width: 78,
+    height: 78,
+    borderRadius: 39,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  passportName: {
+    fontSize: 20,
+    fontWeight: "850",
+    marginTop: 10,
+  },
+
+  passportStats: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: 20,
+  },
+
+  passportStatsItem: {
+    alignItems: "center",
+  },
+
+  passportStatNumber: {
+    fontSize: 20,
+    fontWeight: "900",
+    textAlign: "center",
   },
 
   badgeGrid: {
     flexDirection: "row",
+    flexWrap: "wrap",
     gap: 10,
   },
 
-  badge: {
-    flex: 1,
-    borderWidth: 1,
+  badgeCard: {
+    width: "31.5%",
+    minHeight: 105,
     borderRadius: 17,
-    padding: 15,
+    borderWidth: 1,
     alignItems: "center",
-    minHeight: 100,
     justifyContent: "center",
+    padding: 7,
   },
 
-  badgeText: {
-    fontSize: 11,
-    fontWeight: "700",
-    textAlign: "center",
-    marginTop: 9,
+  badgeEmoji: {
+    fontSize: 28,
   },
+
+  badgeTitle: {
+    fontSize: 10,
+    fontWeight: "800",
+    textAlign: "center",
+    marginTop: 6,
+  },
+
+  proofCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    padding: 16,
+    borderRadius: 18,
+    borderWidth: 1,
+    marginTop: 20,
+  },
+
+  /* PROFILE */
 
   profileCard: {
-    borderWidth: 1,
-    borderRadius: 24,
-    padding: 24,
+    flexDirection: "row",
     alignItems: "center",
+    padding: 16,
+    borderRadius: 20,
+    borderWidth: 1,
     marginTop: 18,
-    marginBottom: 25,
+    marginBottom: 22,
   },
 
-  bigAvatar: {
-    width: 78,
-    height: 78,
-    borderRadius: 26,
+  profileAvatar: {
+    width: 58,
+    height: 58,
+    borderRadius: 29,
     alignItems: "center",
     justifyContent: "center",
-  },
-
-  bigAvatarText: {
-    fontSize: 32,
-    fontWeight: "900",
+    marginRight: 12,
   },
 
   profileName: {
-    fontSize: 20,
-    fontWeight: "800",
-    marginTop: 13,
+    fontSize: 18,
+    fontWeight: "850",
   },
 
-  outlineButton: {
-    minHeight: 45,
-    borderWidth: 1,
-    borderRadius: 13,
-    paddingHorizontal: 17,
+  profileOption: {
+    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    marginTop: 17,
+    padding: 13,
+    borderRadius: 17,
+    borderWidth: 1,
+    marginBottom: 9,
+    gap: 11,
   },
 
   settingRow: {
-    borderWidth: 1,
-    borderRadius: 17,
-    padding: 14,
     flexDirection: "row",
     alignItems: "center",
+    padding: 13,
+    borderRadius: 17,
+    borderWidth: 1,
     marginBottom: 9,
-    gap: 12,
+    gap: 11,
   },
 
   settingIcon: {
-    width: 43,
-    height: 43,
+    width: 42,
+    height: 42,
     borderRadius: 13,
     alignItems: "center",
     justifyContent: "center",
   },
 
   toggle: {
-    width: 48,
-    height: 27,
-    borderRadius: 20,
+    width: 42,
+    height: 24,
+    borderRadius: 14,
     padding: 3,
     justifyContent: "center",
   },
 
-  toggleKnob: {
-    width: 21,
-    height: 21,
-    borderRadius: 11,
-    backgroundColor: "#fff",
+  toggleCircle: {
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    backgroundColor: "#FFFFFF",
   },
 
-  version: {
-    textAlign: "center",
-    fontSize: 11,
-    marginTop: 8,
-  },
+  /* MODAL */
 
   modalBackdrop: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.65)",
+    backgroundColor:
+      "rgba(0,0,0,0.55)",
     alignItems: "center",
     justifyContent: "center",
     padding: 22,
@@ -1442,36 +3975,58 @@ const styles = StyleSheet.create({
 
   modalCard: {
     width: "100%",
-    borderRadius: 23,
-    padding: 21,
+    borderRadius: 22,
+    padding: 20,
   },
 
   modalTitle: {
     fontSize: 21,
-    fontWeight: "800",
-    marginBottom: 18,
+    fontWeight: "850",
+    marginBottom: 5,
   },
 
   input: {
     height: 50,
-    borderWidth: 1,
     borderRadius: 13,
+    borderWidth: 1,
     paddingHorizontal: 14,
-    fontSize: 15,
+    marginTop: 14,
+    fontSize: 14,
   },
 
   modalButtons: {
     flexDirection: "row",
-    gap: 10,
+    gap: 9,
+    marginTop: 15,
+  },
+
+  secondaryButton: {
+    flex: 1,
+    height: 48,
+    borderRadius: 14,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  secondaryText: {
+    fontSize: 13,
+    fontWeight: "800",
+  },
+
+  /* AI */
+
+  aiContainer: {
+    flex: 1,
   },
 
   aiHeader: {
-    minHeight: 70,
-    borderBottomWidth: 1,
-    paddingHorizontal: 17,
+    minHeight: 65,
+    paddingHorizontal: 16,
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
+    borderBottomWidth: 1,
+    gap: 11,
   },
 
   aiLogo: {
@@ -1483,78 +4038,109 @@ const styles = StyleSheet.create({
   },
 
   aiTitle: {
-    fontSize: 17,
-    fontWeight: "900",
+    fontSize: 16,
+    fontWeight: "850",
   },
 
-  onlineDot: {
-    width: 9,
-    height: 9,
-    borderRadius: 5,
+  aiStatus: {
+    fontSize: 10,
+    marginTop: 2,
   },
 
-  chatArea: {
-    padding: 17,
-    paddingBottom: 25,
+  chatContent: {
+    padding: 15,
+    paddingBottom: 10,
   },
 
-  message: {
-    maxWidth: "87%",
-    padding: 13,
-    borderRadius: 17,
-    marginBottom: 11,
-  },
-
-  aiMessage: {
-    alignSelf: "flex-start",
-    borderWidth: 1,
-    borderBottomLeftRadius: 5,
-  },
-
-  userMessage: {
-    alignSelf: "flex-end",
-    borderBottomRightRadius: 5,
-  },
-
-  aiInputArea: {
-    borderTopWidth: 1,
-    padding: 10,
-    paddingBottom: 12,
-  },
-
-  aiModes: {
-    flexDirection: "row",
-    gap: 7,
-    marginBottom: 9,
-  },
-
-  modeChip: {
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 7,
-    borderRadius: 20,
-  },
-
-  inputRow: {
+  aiWelcome: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    gap: 11,
+    padding: 14,
+    borderRadius: 17,
+    marginBottom: 15,
   },
 
-  aiInput: {
-    flex: 1,
-    minHeight: 47,
-    borderWidth: 1,
-    borderRadius: 15,
+  messageRow: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    marginBottom: 12,
+    gap: 7,
+  },
+
+  messageRowUser: {
+    justifyContent: "flex-end",
+  },
+
+  messageAvatar: {
+    width: 31,
+    height: 31,
+    borderRadius: 16,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  messageBubble: {
+    maxWidth: "82%",
     paddingHorizontal: 14,
-    fontSize: 14,
+    paddingVertical: 11,
+    borderRadius: 17,
+    borderWidth: 1,
+  },
+
+  messageText: {
+    fontSize: 13,
+    lineHeight: 19,
+  },
+
+  suggestionRow: {
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    gap: 7,
+  },
+
+  suggestionChip: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+  },
+
+  suggestionText: {
+    fontSize: 10,
+    fontWeight: "700",
+  },
+
+  chatInputRow: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    gap: 8,
+    paddingHorizontal: 12,
+    paddingTop: 9,
+    paddingBottom: 9,
+    borderTopWidth: 1,
+  },
+
+  chatInput: {
+    flex: 1,
+    minHeight: 44,
+    maxHeight: 100,
+    borderRadius: 15,
+    paddingHorizontal: 13,
+    paddingTop: 12,
+    paddingBottom: 10,
+    fontSize: 13,
   },
 
   sendButton: {
-    width: 47,
-    height: 47,
+    width: 44,
+    height: 44,
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
   },
 });
+
+/* =========================================================
+   SAATH APP.JS COMPLETE
+   ========================================================= */ */
