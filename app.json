@@ -10,7 +10,7 @@
       "backgroundColor": "#080B14"
     },
     "android": {
-      "package": "com.saath.learnbuildgrow",
+      "package": "com.saathai.student",
       "versionCode": 1
     },
     "extra": {
