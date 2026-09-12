@@ -10,8 +10,9 @@
       "backgroundColor": "#080B14"
     },
     "android": {
-      "package": "com.saathai.student",
-      "versionCode": 1
+  "package": "com.saathai.student",
+  "googleServicesFile": "./google-services.json",
+  "versionCode": 1
     },
     "extra": {
       "eas": {
